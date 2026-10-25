@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maziwa ERP | Sign in</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#eef1ed;font:15px/1.5 "Segoe UI",system-ui,sans-serif;color:#1d2420;padding:16px}
+.w{display:grid;grid-template-columns:5fr 6fr;width:100%;max-width:920px;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px #0002}
+.br{background:#14412f;color:#cfe3d6;padding:38px 30px}.br h1{font:700 30px Georgia,serif;color:#fff;margin:0 0 6px}.br ul{list-style:none;padding:0;margin:26px 0 0}.br li{padding:9px 0;border-top:1px solid #ffffff22;font-size:14px}
+.fp{padding:32px 34px}h2{margin:0 0 16px;font-size:22px}
+.tabs{display:flex;gap:6px;background:#f0f1ee;padding:5px;border-radius:12px;margin-bottom:16px}.tabs button{flex:1;border:0;background:none;padding:10px;border-radius:8px;font:600 14px inherit;font-family:inherit;color:#555;cursor:pointer}.tabs button.on{background:#fff;color:#14412f;box-shadow:0 1px 4px #0002}
+label{display:block;font-weight:600;font-size:13px;margin:14px 0 5px}
+input{width:100%;padding:11px 12px;border:1px solid #d9ddd6;border-radius:10px;font:inherit}input:focus{outline:2px solid #1f7a4d;border-color:transparent}
+.rs{display:grid;gap:8px}.rl{display:flex;gap:10px;align-items:center;border:1.5px solid #e1e4de;border-radius:12px;padding:10px 12px;cursor:pointer}.rl b{display:block;font-size:14px}.rl small{color:#66706a}
+.rl.on{border-color:#1f7a4d;background:#eaf3ed}.rl.off{opacity:.45;cursor:not-allowed}.rl input{width:auto}
+.pw{display:flex;gap:6px}.pw button{flex:none;border:1px solid #d9ddd6;background:#fff;border-radius:10px;padding:0 12px;cursor:pointer}
+.go{width:100%;margin-top:18px;border:0;border-radius:12px;padding:14px;background:#14412f;color:#fff;font:700 15px inherit;font-family:inherit;cursor:pointer}
+#m{display:none;margin-top:12px;background:#f9e3e0;color:#b83a2c;padding:10px 12px;border-radius:8px;font-size:13px}
+.h{font-size:12px;color:#8a938d;margin-top:5px}.d{margin-top:16px;font-size:12px;color:#66706a;background:#f5f6f3;border-radius:10px;padding:10px 12px}
+@media(max-width:760px){.w{grid-template-columns:1fr}.br{display:none}.fp{padding:24px 20px}}
+</style></head><body><div class="w">
+<section class="br"><h1>Maziwa ERP</h1><div>Dairy operations and cooperative management</div><ul>
+<li>Administrator / Manager</li><li>Milk Collection Clerk</li><li>Quality Officer</li><li>Accountant</li><li>Storekeeper</li><li>Farmer</li><li>Customer</li></ul></section>
+<form class="fp" onsubmit="return go(event)" autocomplete="off"><h2>Sign in</h2>
+<div class="tabs"><button type="button" id="ts" class="on" onclick="mode('s')">Staff</button><button type="button" id="tf" onclick="mode('f')">Farmer</button><button type="button" id="tc" onclick="mode('c')">Customer</button></div>
+<div id="st"><label for="cd">Staff portal code</label><input id="cd" placeholder="Enter staff portal code" oninput="chk()"><div class="h" id="ch">Roles unlock after the portal code is accepted.</div>
+<label>Select your role</label><div class="rs" id="rs"></div></div>
+<label for="id" id="il">Work email</label><input id="id">
+<label for="pw" id="pl">Password</label><div class="pw"><input id="pw" type="password"><button type="button" onclick="var p=$('pw');p.type=p.type=='password'?'text':'password'">Show</button></div>
+<div id="m" role="alert"></div><button class="go" type="submit">Sign in</button>
+<div class="d">Choosing a role does not grant access. Your account must be authorised for it. Demo logins are listed in the setup notes.</div></form></div>
+<script src="auth.js"></script><script>
+var RL=[["Manager","Administrator / Manager","Overview, approvals, staff, audit"],["Clerk","Milk Collection Clerk","Deliveries and receipts"],["Quality","Quality Officer","Tests, accept or reject milk"],["Accountant","Accountant","Payables, settlements, invoices"],["Store","Storekeeper","Tanks, stock, discrepancies"]];
+var md="s",sel=null,ok=false;function $(i){return document.getElementById(i)}
+function draw(){$("rs").innerHTML=RL.map(function(r){return '<label class="rl'+(ok?'':' off')+(sel==r[0]?' on':'')+'" style="margin:0"><input type="radio" name="r" '+(ok?'':'disabled')+' onchange="sel=\''+r[0]+'\';draw()"><span><b>'+r[1]+'</b><small>'+r[2]+'</small></span></label>'}).join("")}
+function chk(){ok=$("cd").value.trim()===CODE;if(!ok)sel=null;$("ch").textContent=ok?"Code accepted. Select your role.":"Roles unlock after the portal code is accepted.";draw()}
+function mode(m){md=m;$("st").style.display=m=="s"?"block":"none";["s","f","c"].forEach(function(k){$("t"+k).className=k==m?"on":""});
+ $("il").textContent=m=="f"?"Phone number":m=="c"?"Customer email":"Work email";$("pl").textContent=m=="f"?"PIN":"Password";$("m").style.display="none"}
+function go(e){e.preventDefault();var role=md=="s"?sel:md=="f"?"Farmer":"Customer",m=$("m");
+ if(!role){m.textContent="Enter the portal code and select a role.";m.style.display="block";return false}
+ var r=Auth.login(role,$("id").value,$("pw").value,$("cd").value.trim());
+ if(r){m.textContent=r;m.style.display="block";return false}location.href="index.html";return false}
+draw();
+</script></body></html>

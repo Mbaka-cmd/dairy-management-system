@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maziwa ERP</title>
+<style>
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{font:14px/1.5 "Segoe UI",system-ui,sans-serif;background:#f4f5f1;color:#1d2420}
+#app{display:flex;height:100%}aside{width:230px;background:#14412f;color:#cfe3d6;padding:18px 12px;flex:none;overflow:auto}
+aside h1{font:700 21px Georgia,serif;color:#fff;margin:0 6px}aside small{display:block;margin:0 6px 18px;font-size:12px;opacity:.85}
+aside a{display:block;padding:9px 12px;border-radius:8px;cursor:pointer;margin:2px 0}aside a:hover{background:#ffffff14}aside a.on{background:#ffffff26;color:#fff;font-weight:600}
+main{flex:1;min-width:0;display:flex;flex-direction:column}header{display:flex;gap:12px;align-items:center;background:#fff;border-bottom:1px solid #e3e0d6;padding:12px 22px}header b{font-size:17px}.sp{flex:1}
+section{padding:22px;overflow:auto}.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.k{background:#fff;border:1px solid #e3e0d6;border-radius:12px;padding:14px}.k span{color:#66706a;font-size:12px}.k b{display:block;font:600 24px Georgia,serif}
+.c{background:#fff;border:1px solid #e3e0d6;border-radius:12px;padding:16px;margin-bottom:16px}.c h3{margin:0 0 10px;font-size:15px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #eceae2;white-space:nowrap}th{font-size:12px;color:#66706a}
+.b{padding:2px 9px;border-radius:10px;font-size:12px;background:#eee}.b.g{background:#eaf3ed;color:#1f7a4d}.b.r{background:#f9e3e0;color:#b83a2c}.b.a{background:#fbf0dc;color:#a8680f}
+.f{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}.f label{display:flex;flex-direction:column;font-size:12px;color:#66706a;gap:3px}
+input,select{font:inherit;padding:7px 9px;border:1px solid #d9ddd6;border-radius:8px;background:#fff}
+button{font:inherit;padding:7px 14px;border-radius:8px;border:1px solid #1f7a4d;background:#1f7a4d;color:#fff;cursor:pointer}button.s{background:#fff;color:#1f7a4d}
+.mu{color:#66706a}.bar{height:8px;background:#e3e0d6;border-radius:4px;overflow:hidden;min-width:120px}.bar i{display:block;height:100%;background:#1f7a4d}
+@media(max-width:760px){#app{flex-direction:column}aside{width:100%;display:flex;gap:4px;overflow-x:auto;padding:10px}aside h1,aside small{display:none}aside a{white-space:nowrap}}
+</style></head><body><div id="app"></div>
+<script src="auth.js"></script><script>
+var RN={Manager:"Administrator / Manager",Clerk:"Milk Collection Clerk",Quality:"Quality Officer",Accountant:"Accountant",Store:"Storekeeper",Farmer:"Farmer",Customer:"Customer"};
+var S=Auth.session();if(!S){location.replace("login.html")}
+var U=S&&ACC.find(function(a){return a.e==S.e}),PR=48,pg="",ADV={F1:1500},DIP={};
+var FA={F1:"Wanjiru Kinyua",F2:"Mwenda Mutwiri",F3:"Kagendo Murithi",F4:"Njeru Gitonga"};
+function ld(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+var DEL=ld("mz_d",[{id:"MC-1001",f:"F1",l:42,s:"Accepted"},{id:"MC-1002",f:"F2",l:30,s:"Accepted"},{id:"MC-1003",f:"F3",l:55,s:"Rejected",why:"Fat 2.8% below 3.2%"},{id:"MC-1004",f:"F4",l:38,s:"Pending"},{id:"MC-1005",f:"F1",l:40,s:"Pending"}]);
+var BT=ld("mz_b",[]),LOG=ld("mz_a",[]);
+function sv(){localStorage.setItem("mz_d",JSON.stringify(DEL));localStorage.setItem("mz_b",JSON.stringify(BT));localStorage.setItem("mz_a",JSON.stringify(LOG))}
+function aud(a){LOG.unshift([new Date().toLocaleString("en-GB"),U.n+" ("+RN[S.r]+")",a]);sv()}
+function $(i){return document.getElementById(i)}
+function K(l,v){return '<div class="k"><span>'+l+'</span><b>'+v+'</b></div>'}
+function C(t,h){return '<div class="c"><h3>'+t+'</h3>'+h+'</div>'}
+function T(h,r,e){return r.length?'<div class="tw"><table><tr>'+h.map(function(x){return '<th>'+x+'</th>'}).join("")+'</tr>'+r.map(function(x){return '<tr>'+x.map(function(c){return '<td>'+c+'</td>'}).join("")+'</tr>'}).join("")+'</table></div>':'<p class="mu">'+(e||"Nothing here yet.")+'</p>'}
+function B(s){return '<span class="b '+({Accepted:"g",Paid:"g",Approved:"g",Rejected:"r",Pending:"a",Draft:"a",Unpaid:"r"}[s]||"")+'">'+s+'</span>'}
+var sum=function(a,f){return a.reduce(function(s,x){return s+f(x)},0)},fm=function(n){return Number(n).toLocaleString("en-KE",{maximumFractionDigits:1})},KES=function(n){return "KES "+fm(n)};
+function acc(){return DEL.filter(function(d){return d.s=="Accepted"})}function L(a){return sum(a,function(d){return d.l})}
+function dt(r){return T(["Ref","Farmer","Litres","Status"],r.map(function(d){return [d.id,FA[d.f],d.l,B(d.s)+(d.why?' <small class="mu">'+d.why+'</small>':"")]}))}
+function pr(items){return Object.keys(FA).map(function(k){var l=L(items.filter(function(d){return d.f==k})),g=l*PR,a=Math.min(ADV[k]||0,g*.5);return [k,l,g,a,g-a]})}
+function act(r,f){if(!Auth.session()||S.r!==r){alert("Your role is not permitted to do this.");return}try{f()}catch(e){alert(e.message)}draw()}
+function addD(){act("Clerk",function(){var f=$("cf").value,l=+$("cl").value;if(!(l>0))throw Error("Enter litres above 0");
+ if(DEL.some(function(d){return d.f==f&&d.l==l&&d.s=="Pending"}))throw Error("Duplicate blocked: same farmer and litres already await a test");
+ var id="MC-"+(1001+DEL.length);DEL.push({id:id,f:f,l:l,s:"Pending"});aud("Delivery "+id+", "+l+" L");sv();alert("Receipt "+id+". Confirmation SMS queued (simulated).")})}
+function qt(id){act("Quality",function(){var d=DEL.find(function(x){return x.id==id}),fat=+$("ft"+id).value,t=+$("tp"+id).value,r=[];if(d.s!="Pending")throw Error("Already tested");
+ if(fat<3.2)r.push("Fat "+fat+"% below 3.2%");if(t>8)r.push("Temp "+t+" C above 8 C");d.s=r.length?"Rejected":"Accepted";d.why=r.join("; ");aud("Quality "+d.s+" "+id)})}
+function mkB(){act("Accountant",function(){var it=acc().filter(function(d){return !d.b});if(!it.length)throw Error("No unsettled accepted milk");
+ var id="SB-"+(BT.length+1);it.forEach(function(d){d.b=id});BT.push({id:id,by:U.n,amt:sum(pr(it),function(r){return r[4]}),s:"Draft"});aud("Batch "+id+" created")})}
+function appr(id){act("Manager",function(){var b=BT.find(function(x){return x.id==id});if(b.by==U.n)throw Error("Maker-checker: you cannot approve your own batch");b.s="Approved";aud("Batch "+id+" approved")})}
+function pay(id){act("Accountant",function(){var b=BT.find(function(x){return x.id==id});if(b.s!="Approved")throw Error("Only approved batches can be paid");b.s="Paid";aud("Batch "+id+" paid (simulated M-Pesa)")})}
+function dip(i){act("Store",function(){var v=$("dp"+i).value;if(v==="")throw Error("Enter a dip reading");DIP[i]=+v;aud("Dip reading tank "+i+": "+v+" L")})}
+function tank(i){return 400+L(acc().filter(function(d){return (d.f=="F1"||d.f=="F3")==(i==0)}))}
+var TN=["Chuka Tank 1 (5,000 L)","Kibugua Tank 1 (3,000 L)"],TC=[5000,3000];
+var PGS={
+Manager:[["ov","Overview",function(){return '<div class="g">'+K("Milk received",fm(L(DEL))+" L")+K("Accepted",fm(L(acc()))+" L")+K("Awaiting test",DEL.filter(function(d){return d.s=="Pending"}).length)+K("Owed to farmers",KES(L(acc())*PR))+'</div>'+C("Recent deliveries",dt(DEL.slice(-6).reverse()))}],
+["ap","Approvals",function(){return C("Settlement batches",T(["Batch","Prepared by","Amount","Status",""],BT.map(function(b){return [b.id,b.by,KES(b.amt),B(b.s),b.s=="Draft"?'<button onclick="appr(\''+b.id+'\')">Approve</button>':""]}),"No batches yet."))}],
+["de","Deliveries",function(){return C("All deliveries",dt(DEL.slice().reverse()))}],
+["fa","Farmers",function(){return C("Farmer records",T(["No.","Name","Accepted L"],Object.keys(FA).map(function(k){return [k,FA[k],L(acc().filter(function(d){return d.f==k}))]})))}],
+["st","Staff accounts",function(){return C("Accounts",T(["Name","Login","Roles"],ACC.filter(function(a){return a.r[0]!="Farmer"&&a.r[0]!="Customer"}).map(function(a){return [a.n,a.e,a.r.map(function(x){return RN[x]}).join(", ")]})))}],
+["au","Audit trail",function(){return C("Audit trail",T(["When","Who","Action"],LOG.slice(0,40)))}]],
+Clerk:[["en","Record delivery",function(){return C("New delivery",'<div class="f"><label>Farmer<select id="cf">'+Object.keys(FA).map(function(k){return '<option value="'+k+'">'+FA[k]+'</option>'}).join("")+'</select></label><label>Litres<input id="cl" type="number" min="1" step="any"></label><button onclick="addD()">Save and send SMS</button></div>')+C("Today's deliveries",dt(DEL.slice(-6).reverse()))}],
+["lk","Farmer lookup",function(){return C("Farmers",T(["No.","Name","Accepted L"],Object.keys(FA).map(function(k){return [k,FA[k],L(acc().filter(function(d){return d.f==k}))]})))}]],
+Quality:[["pt","Pending tests",function(){return C("Waiting for a test (fat minimum 3.2%, temperature maximum 8 C)",T(["Ref","Farmer","Litres","Fat %","Temp C",""],DEL.filter(function(d){return d.s=="Pending"}).map(function(d){return [d.id,FA[d.f],d.l,'<input id="ft'+d.id+'" type="number" step="any" value="3.8" style="width:70px">','<input id="tp'+d.id+'" type="number" step="any" value="5" style="width:70px">','<button onclick="qt(\''+d.id+'\')">Record</button>']}),"No pending tests."))}],
+["rs","Results",function(){return C("Tested milk",dt(DEL.filter(function(d){return d.s!="Pending"}).reverse()))}]],
+Accountant:[["pa","Farmer payables",function(){return C("Accepted milk at KES "+PR+" per litre, advance recovery capped at 50%",T(["Farmer","Accepted L","Gross","Advance recovered","Net"],pr(acc()).map(function(r){return [FA[r[0]],fm(r[1]),KES(r[2]),KES(r[3]),KES(r[4])]})))}],
+["se","Settlements",function(){return C("Settlement batches",'<p><button onclick="mkB()">Create batch</button> <span class="mu">A Manager must approve before payment.</span></p>'+T(["Batch","Amount","Status",""],BT.map(function(b){return [b.id,KES(b.amt),B(b.s),b.s=="Approved"?'<button onclick="pay(\''+b.id+'\')">Release payment</button>':""]}),"No batches yet."))}],
+["iv","Customer invoices",function(){return C("Invoices",T(["Invoice","Customer","Amount","Status"],[["INV-2001","Mt Kenya Hotel",KES(18600),B("Unpaid")],["INV-2002","Tharaka Supermarket",KES(24800),B("Paid")]]))}]],
+Store:[["tk","Tanks",function(){return C("Tank levels",T(["Tank","Ledger L","Capacity","Level","Physical dip","Variance",""],TN.map(function(n,i){var b=tank(i),d=DIP[i];return [n,fm(b),fm(TC[i]),'<div class="bar"><i style="width:'+Math.min(100,b/TC[i]*100)+'%"></i></div>',d===undefined?"Not recorded":fm(d),d===undefined?"Pending":(Math.abs(d-b)<.01?B("Accepted"):B("Rejected")+" "+fm(d-b)+" L"),'<input id="dp'+i+'" type="number" step="any" style="width:80px"> <button class="s" onclick="dip('+i+')">Record</button>']})))}],
+["mv","Stock movements",function(){return C("Receipts into tanks",T(["Ref","Farmer","Litres","Type"],acc().map(function(d){return [d.id,FA[d.f],"+"+d.l,"Receipt"]}),"No movements."))}]],
+Farmer:[["my","My deliveries",function(){return C("Deliveries for "+U.n,dt(DEL.filter(function(d){return d.f==U.f}).reverse()))}],
+["sm","Payment statement",function(){var r=pr(acc().filter(function(d){return d.f==U.f}))[Object.keys(FA).indexOf(U.f)];return '<div class="g">'+K("Accepted milk",fm(r[1])+" L")+K("Gross value",KES(r[2]))+K("Advance recovered",KES(r[3]))+K("Net payable",KES(r[4]))+'</div>'}]],
+Customer:[["ca","Product catalogue",function(){return C("Products",T(["Product","Unit","Price"],[["Fresh pasteurised milk","Litre","KES 62"],["Yoghurt","500 ml","KES 120"],["Fermented milk (mala)","500 ml","KES 100"]]))}],
+["or","Orders and invoices",function(){return C("Your orders",T(["Order","Item","Delivery","Invoice","Status"],[["SO-310","300 L milk","Delivered","INV-2001",B("Unpaid")],["SO-298","200 L milk","Delivered","INV-1990",B("Paid")]]))}],
+["bl","Balance",function(){return '<div class="g">'+K("Outstanding",KES(18600))+K("Credit limit",KES(150000))+'</div>'}]]};
+function draw(){if(!Auth.session()){location.replace("login.html");return}
+ var p=PGS[S.r],cur=p.find(function(x){return x[0]==pg})||p[0];pg=cur[0];
+ $("app").innerHTML='<aside><h1>Maziwa ERP</h1><small>'+RN[S.r]+'</small>'+p.map(function(x){return '<a class="'+(x[0]==pg?"on":"")+'" onclick="pg=\''+x[0]+'\';draw()">'+x[1]+'</a>'}).join("")+'</aside><main><header><b>'+cur[1]+'</b><span class="sp"></span>'+(U.r.length>1?'<select onchange="sw(this.value)">'+U.r.map(function(r){return '<option value="'+r+'"'+(r==S.r?' selected':'')+'>'+RN[r]+'</option>'}).join("")+'</select>':"")+'<span class="mu">'+U.n+'</span><button class="s" onclick="Auth.out()">Log out</button></header><section>'+cur[2]()+'</section></main>'}
+function sw(r){if(r==S.r)return;var pw=prompt("Confirm your password to switch to "+RN[r]);if(pw!==null&&Auth.switchTo(r,pw)){S=Auth.session();pg="";aud("Switched role")}else alert("Switch denied.");draw()}
+if(S){draw();setInterval(function(){if(!Auth.session(false))location.replace("login.html")},30000)}
+</script></body></html>

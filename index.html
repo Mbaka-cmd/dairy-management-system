@@ -1,0 +1,771 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maziwa ERP – Dairy Cooperative Demo</title>
+<style>
+:root{--bg:#f6f4ee;--card:#fff;--tx:#1d2420;--mu:#66706a;--bd:#e3e0d6;--nav:#14412f;--nt:#cfe3d6;--ac:#1f7a4d;--wa:#a8680f;--er:#b83a2c;--soft:#eaf3ed;--wb:#fbf0dc;--eb:#f9e3e0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111815;--card:#1a231f;--tx:#e8efe9;--mu:#9aa89f;--bd:#2b3731;--nav:#0c221a;--ac:#4cc38a;--wa:#e0a84a;--er:#ef7a6c;--soft:#203029;--wb:#3a2f1a;--eb:#40231f}}
+:root[data-theme="dark"]{--bg:#111815;--card:#1a231f;--tx:#e8efe9;--mu:#9aa89f;--bd:#2b3731;--nav:#0c221a;--ac:#4cc38a;--wa:#e0a84a;--er:#ef7a6c;--soft:#203029;--wb:#3a2f1a;--eb:#40231f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--tx);font:14px/1.5 "Segoe UI",system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box}.app{display:flex;height:100%}
+aside{width:252px;background:var(--nav);color:var(--nt);overflow-y:auto;flex:none;padding:14px 0 24px}
+aside h1{font:700 22px Georgia,serif;margin:2px 16px 12px;color:#fff}aside h1 small{display:block;font:400 11px "Segoe UI",sans-serif;color:var(--nt);opacity:.85}
+#nq{width:calc(100% - 28px);margin:0 14px 4px;background:#ffffff14;border:1px solid #ffffff2e;color:#fff;border-radius:6px;padding:7px 10px}#nq::placeholder{color:var(--nt);opacity:.75}
+.gh{font-size:11px;font-weight:700;letter-spacing:.06em;opacity:.7;margin:16px 16px 4px;text-transform:uppercase}
+aside a{display:block;padding:6px 16px;color:var(--nt);text-decoration:none;cursor:pointer;border-left:3px solid transparent}
+aside a:hover{background:#ffffff14}aside a.on{background:#ffffff1f;border-left-color:#7fd6a5;color:#fff}
+main{flex:1;overflow:auto;min-width:0}
+.top{display:flex;gap:10px;align-items:center;padding:10px 20px;background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:5}
+.top .sp{flex:1}.top select,.top button{font:inherit}.mu{color:var(--mu);font-size:12px}.menu{display:none}
+.bn{display:inline-block;min-width:18px;padding:0 5px;border-radius:9px;background:var(--wa);color:#fff;font-size:12px;text-align:center}
+.pg{padding:20px;max-width:1180px}
+h2{font:700 26px Georgia,serif;margin:0 0 2px}.sub{color:var(--mu);margin:0 0 16px}.crumb{font-size:12px;color:var(--mu);margin-bottom:6px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:14px;margin-bottom:14px}.card h3{margin:0 0 8px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:14px}
+.k{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px}.k span{color:var(--mu);font-size:12px}.k b{display:block;font:600 24px Georgia,serif;margin:2px 0}.k small{display:block;color:var(--mu);font-size:11px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--bd);white-space:nowrap}th{font-weight:600;color:var(--mu);font-size:12px}
+.b{display:inline-block;padding:1px 8px;border-radius:10px;font-size:12px;background:var(--soft)}.b.g{background:var(--soft);color:var(--ac)}.b.a{background:var(--wb);color:var(--wa)}.b.r{background:var(--eb);color:var(--er)}
+.f{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:6px}.f label{display:flex;flex-direction:column;font-size:12px;color:var(--mu);gap:2px}
+input,select,textarea{font:inherit;padding:6px 8px;border:1px solid var(--bd);border-radius:6px;background:var(--card);color:var(--tx)}
+button{font:inherit;padding:6px 14px;border-radius:6px;border:1px solid var(--ac);background:var(--ac);color:#fff;cursor:pointer}button.s{background:transparent;color:var(--ac)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #e0a84a;outline-offset:2px}
+.empty{padding:20px;text-align:center;color:var(--mu)}.bar{height:8px;background:var(--bd);border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.note{background:var(--wb);color:var(--wa);padding:8px 12px;border-radius:6px;margin-bottom:12px;font-size:13px}
+.dm{background:var(--soft);color:var(--ac);padding:8px 12px;border-radius:6px;margin-bottom:14px;font-size:13px}.dm b{margin-right:8px}
+.rl{display:grid;grid-template-columns:1fr auto;gap:6px 12px}.rl strong{text-align:right}.tk{margin-bottom:14px}.tk .f{margin:6px 0 0}.tk input{width:90px}
+.al{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd)}.al i{flex:none;width:22px;height:22px;border-radius:50%;background:var(--wb);color:var(--wa);text-align:center;font-style:normal;font-weight:700}
+#toast{position:fixed;right:16px;top:calc(60px + env(safe-area-inset-top,0px));background:var(--nav);color:#fff;padding:10px 14px;border-radius:6px;display:none;z-index:9;max-width:340px}#toast.e{background:var(--er)}
+#cap{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));background:var(--nav);color:#fff;padding:10px 18px;border-radius:8px;display:none;z-index:9;max-width:90%;text-align:center}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:820px){aside{position:fixed;left:-270px;top:0;bottom:0;z-index:20;transition:left .2s}aside.open{left:0}.menu{display:block}.two{grid-template-columns:1fr}.pg{padding:14px}.top{padding:8px 12px}}
+@media(prefers-reduced-motion:reduce){aside{transition:none}}
+aside{display:flex;flex-direction:column;padding:14px 0 0;overflow:hidden}
+#nl{flex:1;overflow-y:auto;padding-bottom:12px;scrollbar-width:thin}
+.gt{display:flex;align-items:center;justify-content:space-between;width:calc(100% - 20px);margin:14px 10px 2px;padding:4px 6px;background:none;border:0;color:var(--nt);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;opacity:.75;cursor:pointer;border-radius:4px}
+.gt:hover{opacity:1;background:#ffffff10}.gt svg{width:12px;height:12px;transition:transform .15s}.gt.c svg{transform:rotate(-90deg)}
+aside a{display:flex;align-items:center;gap:10px;margin:1px 10px;padding:6px 10px;border-radius:6px;border-left:0}
+aside a .ic{width:17px;height:17px;flex:none;opacity:.85}aside a .tx{flex:1}
+aside a.on{background:#ffffff26;color:#fff;box-shadow:inset 3px 0 0 #7fd6a5}aside a.on .ic{opacity:1}
+.nb{min-width:18px;padding:0 6px;border-radius:9px;background:#e0a84a;color:#2a1c00;font-size:11px;font-weight:700;text-align:center}
+#nf{padding:10px 14px;border-top:1px solid #ffffff1f;font-size:11px;display:flex;align-items:center;gap:8px;color:var(--nt)}
+#nf .dot{width:7px;height:7px;border-radius:50%;background:#7fd6a5}#nf .av{margin-left:auto;background:#ffffff26;color:#fff;border-radius:50%;width:26px;height:26px;display:grid;place-items:center;font-weight:700}
+</style></head><body>
+<div class="app"><aside id="nav" aria-label="Main navigation"><h1>Maziwa ERP<small>Dairy Operations &amp; Cooperative Management</small></h1><input id="nq" type="search" placeholder="Find a module…" aria-label="Find a module" oninput="S.q=this.value;nav()"><div id="nl"></div><div id="nf"></div></aside>
+<main><div class="top"><button class="s menu" onclick="document.getElementById('nav').classList.toggle('open')" aria-label="Menu">Menu</button><span class="mu">Demo environment · v0.2 preview</span><span class="sp"></span><button class="s" onclick="go('milk')">Record delivery</button><button class="s" onclick="sessionStorage.removeItem('mz_role');location.href='login.html'">Log out</button><label style="display:none">Role <select id="role" onchange="setRole(this.value)"></select></label><button class="s" onclick="go('notif')">Alerts <span class="bn" id="bn"></span></button></div>
+<div class="pg" id="pg"></div></main></div><div id="toast" role="status"></div><div id="cap"></div>
+<script>
+const R={minFat:3.2,maxTemp:8,price:48,sale:62,sms:0.8};let seq=1000,S={role:"Manager",route:"overview",force:false};
+const F=[],T=[{id:"TK-01",name:"Chuka Tank 1",centre:"Chuka",cap:5000},{id:"TK-02",name:"Kibugua Tank 1",centre:"Kibugua",cap:3000}],D=[],L=[],P=[],B=[],SM=[],C=[{id:"C1",name:"Mt Kenya Hotel",limit:150000},{id:"C2",name:"Tharaka Supermarket",limit:80000},{id:"C3",name:"Chuka University Canteen",limit:120000}],I=[],PAY=[],A=[],PB=[],XF=[];
+const $=id=>document.getElementById(id),v=id=>$(id).value,fmt=n=>Number(n).toLocaleString("en-KE",{maximumFractionDigits:2}),KES=n=>"KES "+fmt(n);
+const dt=(o=0)=>{const d=new Date();d.setDate(d.getDate()+o);return d.toLocaleDateString("en-GB",{day:"2-digit",month:"short"})},tm=()=>new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+const BC={Accepted:"g",Paid:"g",Approved:"g",Delivered:"g",Active:"g",Passed:"g",Rejected:"r",Failed:"r",Pending:"a",Draft:"a",Partial:"a",Open:"a",Unpaid:"r",Simulated:"a",Queued:"a"};
+const st=s=>`<span class="b ${BC[s]||""}">${s}</span>`;
+const tbl=(h,r,e)=>r.length?`<div class="tw"><table><thead><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${r.map(x=>`<tr>${x.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`:`<div class="empty">${e||"No records yet. Use the form above to add one."}</div>`;
+const fl=(l,id,t,x)=>`<label>${l}${t=="sel"?`<select id="${id}">${x.map(o=>Array.isArray(o)?`<option value="${o[0]}">${o[1]}</option>`:`<option>${o}</option>`).join("")}</select>`:`<input id="${id}" type="${t||"text"}" value="${x??""}" ${t=="number"?'step="any"':""}>`}</label>`;
+const NAV=[["Workspace",[["overview","Overview"],["notif","Notifications"],["reports","Reports"],["biz","Business Case"]]],["Farmer Management",[["farmers","Farmers"],["members","Memberships"],["stmts","Farmer Statements"],["fsvc","Farmer Services"]]],["Milk Operations",[["milk","Milk Collection"],["qc","Quality Control"],["tanks","Milk Storage & Tanks"],["xfer","Milk Transfers"],["recon","Milk Reconciliation"]]],["Farmer Payments",[["payables","Farmer Payables"],["calc","Payment Calculations"],["deduct","Deductions & Advances"],["settle","Settlement Batches"],["payhist","Payment History"]]],["Production",[["pplan","Production Planning"],["prod","Processing Batches"],["yield","Production Yields"],["fp","Finished Products"],["trace","Batch Traceability"]]],["Inventory & Procurement",[["inv","Inventory Overview"],["stocksup","Stock & Supplies"],["moves","Stock Movements"],["adj","Stock Adjustments"],["sups","Suppliers"],["proc","Purchase Orders"],["grn","Goods Received"]]],["Sales & Distribution",[["cust","Customers"],["orders","Customer Orders"],["sales","Sales Invoices"],["disp","Dispatch & Deliveries"],["ret","Returns & Credit Notes"],["recv","Customer Receivables"]]],["Finance",[["fin","Financial Overview"],["coa","Chart of Accounts"],["cash","Cashbook"],["exp","Expenses"],["sup","Supplier Payables"],["bank","Bank & M-Pesa Reconciliation"],["finrep","Financial Reports"]]],["Communications",[["smsd","SMS Dashboard"],["autosms","Automatic Farmer SMS"],["bulk","Send Bulk SMS"],["tpl","Message Templates"],["hist","Message History"],["dlr","Delivery Reports"]]],["Cooperative Services",[["meet","Meetings & Attendance"],["train","Training"],["comp","Complaints"],["adv","Farmer Advances"],["memc","Member Communications"]]],["Fleet & Equipment",[["routes","Collection Routes"],["veh","Vehicles & Drivers"],["trans","Transport & Deliveries"],["eq","Equipment Register"],["maint","Maintenance & Repairs"],["calib","Calibration Records"]]],["Food Safety & Compliance",[["temp","Temperature Logs"],["clean","Cleaning & Sanitation"],["qrec","Quality Records"],["nc","Non-Conformities"],["ca","Corrective Actions"],["recall","Product Recalls"]]],["Livestock & Farm",[["animals","Animal Register"],["milkprod","Milk Production"],["feed","Feeding Records"],["breed","Breeding & Calving"],["vet","Veterinary Records"],["ahr","Animal Health Reports"]]],["Administration",[["users","Users & Roles"],["br","Branches & Collection Centres"],["tankloc","Tanks & Storage Locations"],["price","Products & Pricing"],["rules","Quality Rules"],["appr","Approval Workflows"],["audit","Audit Trail"],["integ","Integrations"],["sys","System Settings"],["bak","Backup & Recovery"]]]];
+const ALL=[0,1,2,3,4,5,6,7,8,9,10,11,12,13],ROLES={"Manager":ALL,"Collection Clerk":[0,1,2,8,10],"Quality Officer":[0,2,4,11],"Accountant":[0,1,3,5,6,7,8],"Auditor":ALL};
+const CAN={collect:["Manager","Collection Clerk"],test:["Manager","Quality Officer"],settle:["Manager","Accountant"],approve:["Manager"],sell:["Manager","Accountant"],pay:["Manager","Accountant"],prod:["Manager"],sms:["Manager"],admin:["Manager"],xfer:["Manager","Collection Clerk"]};
+const need=a=>{if(!S.force&&!(CAN[a]||[]).includes(S.role))throw Error(`${S.role} is not permitted to do this (${a}). In the live system the server refuses it.`)};
+const toast=(m,e)=>{const t=$("toast");t.textContent=m;t.className=e?"e":"";t.style.display="block";clearTimeout(t.h);t.h=setTimeout(()=>t.style.display="none",3200)};
+const run=f=>{try{const r=f();render();return r}catch(x){toast(x.message,1);render()}};
+const aud=(a,r,x)=>A.unshift({t:dt()+" "+tm(),u:S.role,a,r,x:x||""});
+const bal=t=>L.filter(x=>x.tank==t).reduce((a,x)=>a+x.q,0),Fm=id=>F.find(f=>f.id==id),Tk=id=>T.find(t=>t.id==id);
+function post(tank,type,q,ref,src){const t=Tk(tank);if(q<0&&bal(tank)+q<0)throw Error(`Insufficient stock in ${t.name}: ${fmt(bal(tank))} L available`);if(q>0&&bal(tank)+q>t.cap)throw Error(`${t.name} capacity of ${fmt(t.cap)} L exceeded`);L.push({id:"LG-"+(++seq),d:dt()+" "+tm(),tank,type,q,ref,src})}
+function sms(to,msg,key,kind){if(SM.some(m=>m.key==key))return;SM.unshift({key,to,msg,kind,st:"Simulated",t:dt()+" "+tm(),cost:R.sms})}
+function register(n,ph,c){need("collect");if(!n||!ph)throw Error("Name and phone are required");if(F.some(f=>f.phone==ph))throw Error("Duplicate blocked: that phone number is already registered");const f={id:"F"+String(F.length+1).padStart(3,"0"),name:n,phone:ph,centre:c,advance:0};F.push(f);aud("Farmer registered",f.id,n);return f}
+function collect(fid,l,o){need("collect");l=+l;if(!(l>0))throw Error("Enter litres greater than 0");if(D.some(d=>d.fid==fid&&d.l==l&&d.s=="Pending"&&!o))throw Error("Duplicate submission blocked: same farmer and quantity is already awaiting a test");const f=Fm(fid),d={id:"D"+(++seq),ref:"MC-"+(++seq),fid,l,centre:f.centre,tank:f.centre=="Chuka"?"TK-01":"TK-02",date:dt(o||0),s:"Pending",by:S.role};D.push(d);sms(f.phone,`Dear ${f.name.split(" ")[0]}, we received ${l} L on ${d.date} (Ref ${d.ref}). Quality result to follow.`,"rcv:"+d.ref,"Delivery");aud("Delivery recorded",d.ref,l+" L from "+f.id);return d}
+function qtest(id,fat,temp,abx){need("test");const d=D.find(x=>x.id==id);if(!d||d.s!="Pending")throw Error("This delivery has already been tested");const r=[];if(+fat<R.minFat)r.push(`Fat ${fat}% is below ${R.minFat}%`);if(+temp>R.maxTemp)r.push(`Temp ${temp}°C is above ${R.maxTemp}°C`);if(abx=="Positive")r.push("Antibiotic residue");d.fat=+fat;d.temp=+temp;d.why=r.join("; ");d.s=r.length?"Rejected":"Accepted";const f=Fm(d.fid);if(d.s=="Accepted"){post(d.tank,"Receipt",d.l,d.ref,"Accepted delivery");P.push({ref:d.ref,fid:d.fid,l:d.l,g:d.l*R.price,b:null})}
+sms(f.phone,d.s=="Accepted"?`${d.ref}: ${d.l} L accepted (fat ${fat}%). Value ${KES(d.l*R.price)}.`:`${d.ref}: ${d.l} L rejected. Reason: ${d.why}. Please contact your centre.`,"qc:"+d.ref,"Quality");aud("Quality "+d.s.toLowerCase(),d.ref,d.why||"Passed all rules")}
+const liab=fid=>P.filter(p=>!p.b&&(!fid||p.fid==fid)).reduce((a,p)=>a+p.g,0);
+function mkBatch(){need("settle");const un=P.filter(p=>!p.b);if(!un.length)throw Error("No unsettled accepted milk to include");const id="SB-"+(++seq),items={};un.forEach(p=>{p.b=id;(items[p.fid]=items[p.fid]||{fid:p.fid,g:0,l:0}).g+=p.g;items[p.fid].l+=p.l});const it=Object.values(items).map(x=>{const dd=Math.min(Fm(x.fid).advance,x.g*.5);return{...x,dd,n:x.g-dd}});B.push({id,s:"Draft",by:S.role,it,t:dt()});aud("Settlement batch created",id,it.length+" farmers")}
+function apprB(id){need("approve");const b=B.find(x=>x.id==id);if(b.by==S.role)throw Error("Maker-checker: the creator of a batch cannot approve it");b.s="Approved";b.ap=S.role;aud("Settlement batch approved",id)}
+function payB(id){need("pay");const b=B.find(x=>x.id==id);if(b.s!="Approved")throw Error("Only approved batches can be paid");if(b.paid)throw Error("Already paid");b.paid=1;b.s="Paid";b.ref="SIM"+(++seq);b.it.forEach(x=>{const f=Fm(x.fid);f.advance-=x.dd;sms(f.phone,`Payment of ${KES(x.n)} for ${x.l} L sent (simulated, ref ${b.ref}).`,"pay:"+b.id+x.fid,"Payment")});aud("Settlement paid (simulated M-Pesa)",id,b.ref)}
+const invBal=i=>i.amt-PAY.filter(p=>p.inv==i.no).reduce((a,p)=>a+p.amt,0);
+function sell(c,tank,l){need("sell");l=+l;if(!(l>0))throw Error("Enter litres greater than 0");const cu=C.find(x=>x.id==c),out=I.filter(i=>i.c==c).reduce((a,i)=>a+invBal(i),0);if(out+l*R.sale>cu.limit)throw Error(`Credit limit of ${KES(cu.limit)} would be exceeded`);const no="INV-"+(++seq);post(tank,"Dispatch",-l,no,"Dispatch to "+cu.name);I.push({no,c,l,amt:l*R.sale,date:dt(),tank});aud("Invoice issued and milk dispatched",no,l+" L to "+cu.name)}
+function payI(no,a,m){need("pay");a=+a;const i=I.find(x=>x.no==no);if(!(a>0)||a>invBal(i)+.001)throw Error("Payment must be above 0 and not exceed the balance of "+KES(invBal(i)));PAY.push({no:"RC-"+(++seq),inv:no,amt:a,m,date:dt()});aud("Payment recorded",no,KES(a)+" via "+m)}
+function produce(tank,l,p){need("prod");l=+l;const y={Pasteurised:.98,Yoghurt:.93,"Fermented milk":.95}[p];post(tank,"Processing",-l,"PB",p+" batch");const n="PB-"+(++seq);PB.push({n,p,tank,in:l,out:l*y,loss:l*(1-y),mfg:dt(),exp:dt(p=="Pasteurised"?5:14),src:[...new Set(D.filter(d=>d.tank==tank&&d.s=="Accepted").map(d=>d.fid))]});L[L.length-1].ref=n;aud("Production batch",n,l+" L → "+fmt(l*y)+" L "+p)}
+function xfer(a,b,l){need("xfer");l=+l;if(a==b)throw Error("Choose two different tanks");post(a,"Transfer out",-l,"XF","To "+b);post(b,"Transfer in",l,"XF","From "+a);XF.push({d:dt()+" "+tm(),a,b,l,s:"Confirmed"});aud("Tank transfer",a+"→"+b,l+" L")}
+function loss(tank,l,why){need("xfer");post(tank,"Loss",-l,"LOSS",why||"Spillage");aud("Loss recorded",tank,l+" L: "+why)}
+function setRole(r){S.role=r;if(!ROLES[r].includes(gi(S.route)))S.route="overview";render()}
+const gi=k=>NAV.findIndex(g=>g[1].some(i=>i[0]==k)),go=k=>{S.route=k;$("nav").classList.remove("open");render();$("pg").scrollTop=0;document.querySelector("main").scrollTo(0,0)};
+const head=(t,d,g)=>`<div class="crumb">${g||""} / ${t}</div><h2>${t}</h2><p class="sub">${d}</p>`;
+const acc=()=>D.filter(d=>d.s=="Accepted"),sum=(a,f)=>a.reduce((s,x)=>s+f(x),0);
+const stock=()=>sum(T,t=>bal(t.id)),recv=()=>sum(I,invBal);
+const GEN={members:["Memberships","Share capital and membership status.",["Member","Category","Shares","Status"],()=>F.map((f,i)=>[f.name,["Smallholder","Medium","Smallholder"][i%3],KES(2000+i%3*1000),st("Active")])],
+fsvc:["Farmer Services","AI, extension and input services requested by farmers.",["Service","Farmer","Date","Status"],()=>[["Artificial insemination","Wanjiru Kinyua",dt(-1),st("Open")],["Feed supply","Mwenda Mutwiri",dt(-2),st("Delivered")],["Extension visit","Njeru Gitonga",dt(-3),st("Delivered")]]],
+exp:["Expenses and Cashbook","Operating costs. Farmer pay-outs and customer receipts appear in the cashbook automatically.",["Date","Item","Type","Amount"],()=>[[dt(-3),"Fuel, collection route 1","Expense",KES(8200)],[dt(-2),"Chiller servicing","Expense",KES(12500)],...B.filter(b=>b.paid).map(b=>[b.t,"Farmer settlement "+b.id,"Pay-out (simulated)",KES(sum(b.it,x=>x.n))]),...PAY.map(p=>[p.date,"Receipt "+p.no+" ("+p.inv+")","Receipt",KES(p.amt)])]],
+sup:["Suppliers and Payables","Supplier bills awaiting payment.",["Supplier","Bill","Due","Amount","Status"],()=>[["Highland Packaging","BL-2201",dt(7),KES(46000),st("Open")],["Tharaka Feeds","BL-2188",dt(-2),KES(31500),st("Unpaid")]]],
+inv:["Inventory and Supplies","Raw materials, packaging and consumables with reorder alerts.",["Item","Unit","On hand","Reorder level","Alert"],()=>[["Starter culture","kg",12,10,""],["500 ml pouches","pcs",1800,2500,st("Open")],["Sanitiser","L",40,20,""],["Cartons","pcs",300,200,""]]],
+proc:["Procurement","Purchase orders. Stock rises only when a receipt is posted, not when an order is raised.",["PO","Supplier","Ordered","Received","Status"],()=>[["PO-118","Highland Packaging","5,000 pouches","3,000",st("Partial")],["PO-119","Tharaka Feeds","20 bags","0",st("Open")]]],
+adj:["Stock Adjustments","Adjustments require a reason and approval.",["Date","Item","Change","Reason","Status"],()=>[[dt(-2),"Cartons","-10","Water damage",st("Approved")],...L.filter(l=>l.type=="Loss").map(l=>[l.d,Tk(l.tank).name,l.q+" L",l.src,st("Approved")])]],
+routes:["Collection Routes","Routes, centres and scheduled pick-ups.",["Route","Centre","Farmers","Schedule"],()=>[["Route 1","Chuka",F.filter(f=>f.centre=="Chuka").length,"05:30 daily"],["Route 2","Kibugua",F.filter(f=>f.centre=="Kibugua").length,"06:00 daily"]]],
+veh:["Vehicles and Deliveries","Recorded handovers and trips. No GPS is implied in this demo.",["Vehicle","Driver","Trip","Litres","Status"],()=>[["KDA 214X","J. Mwenda","Chuka to plant",fmt(sum(D.filter(d=>d.centre=="Chuka"&&d.s=="Accepted"),d=>d.l)),st("Delivered")],["KCB 880T","P. Kiogora","Kibugua to plant",fmt(sum(D.filter(d=>d.centre=="Kibugua"&&d.s=="Accepted"),d=>d.l)),st("Delivered")]]],
+eq:["Equipment and Maintenance","Asset register, service schedules and work orders.",["Asset","Location","Next service","Status"],()=>[["Bulk chiller 5000 L","Chuka",dt(14),st("Active")],["Milk analyser","Chuka",dt(30),st("Active")],["Platform scale","Kibugua",dt(-2),st("Open")]]],
+meet:["Meetings and Training","Attendance and training sessions.",["Date","Session","Attendance","Status"],()=>[[dt(-6),"Annual general meeting","9 of "+F.length,st("Delivered")],[dt(5),"Mastitis control training","Planned",st("Open")]]],
+comp:["Complaints and Advances","Open complaints and advances recovered through settlements.",["Type","Farmer","Detail","Status"],()=>[...F.filter(f=>f.advance>0).map(f=>["Advance",f.name,KES(f.advance)+" outstanding, recovered up to 50% per batch",st("Open")]),["Complaint","Karimi Mwiti","Late payment, "+dt(-4),st("Open")]]],
+live:["Livestock and Veterinary","Optional module. Records herd health and milk yield.",["Animal","Breed","Last event","Yield L/day"],()=>[["Cow 014","Friesian","Vaccinated "+dt(-9),18.5],["Cow 021","Ayrshire","Calved "+dt(-30),14],["Cow 007","Jersey","Treated, mastitis "+dt(-3),9.5]]],
+fs:["Food Safety","Inspections and hold status.",["Check","Area","Date","Result"],()=>[["Hygiene inspection","Chuka plant",dt(-5),st("Passed")],["Water test","Kibugua",dt(-12),st("Passed")]]],
+temp:["Temperature Logs","Taken from quality tests, so every log ties to a delivery.",["Delivery","Tank","Temp °C","Limit","Status"],()=>D.filter(d=>d.temp!=null).slice(-12).reverse().map(d=>[d.ref,Tk(d.tank).name,d.temp,"≤ "+R.maxTemp,st(d.temp>R.maxTemp?"Failed":"Passed")])],
+clean:["Cleaning Records","Sanitation log per tank.",["Tank","Cleaned","By","Status"],()=>T.map(t=>[t.name,dt(0)+" 05:00","Storekeeper",st("Passed")])],
+ca:["Corrective Actions","Created for every rejected delivery.",["Delivery","Farmer","Issue","Action","Status"],()=>D.filter(d=>d.s=="Rejected").reverse().map(d=>[d.ref,Fm(d.fid).name,d.why,"Farmer advised, retest in 48 h",st("Open")])],
+tpl:["Message Templates","Variables are substituted safely at send time.",["Template","Text"],()=>[["Delivery received","Dear {name}, we received {litres} L on {date} (Ref {ref})."],["Quality result","{ref}: {litres} L {status}. {detail}"],["Payment","Payment of {amount} sent (ref {pay_ref})."]]],
+br:["Branches and Collection Centres","Locations with their tanks. User access is scoped by location.",["Centre","Tank","Capacity","Stock","Farmers"],()=>T.map(t=>[t.centre,t.name,fmt(t.cap)+" L",fmt(bal(t.id))+" L",F.filter(f=>f.centre==t.centre).length])],
+integ:["Integrations","Every integration is simulated in this demo and labelled as such.",["Service","Purpose","Mode"],()=>[["Africa’s Talking","SMS",st("Simulated")],["M-Pesa Daraja","Farmer pay-outs and receipts",st("Simulated")],["Bank statement import","Reconciliation",st("Open")]]],
+sys:["System Settings","Organisation and numbering.",["Setting","Value"],()=>[["Organisation","Maziwa Dairy Cooperative (demo)"],["Currency","KES"],["Invoice numbering","INV-sequence, unique"],["Costing policy","Weighted average (documented)"]]],
+bak:["Backup and Recovery","Nightly encrypted backups with a restore test each month.",["Date","Type","Status"],()=>[[dt(0)+" 02:00","Database","Verified"],[dt(-1)+" 02:00","Database","Verified"]]]};
+const st3=(t,d,c,r)=>[t,d,c,()=>r],DIP={};
+GEN.cash=["Cashbook","Every receipt and pay-out recorded in the system.",GEN.exp[2],GEN.exp[3]];
+Object.assign(GEN,{
+exp:st3("Expenses","Operating costs by category.",["Date","Category","Description","Amount"],[[dt(-3),"Fuel","Collection route 1",KES(8200)],[dt(-2),"Maintenance","Chiller servicing",KES(12500)],[dt(-1),"Utilities","Electricity, Chuka plant",KES(9800)]]),
+pplan:st3("Production Planning","Planned batches against expected milk supply.",["Planned for","Product","Planned litres","Status"],[[dt(1),"Pasteurised",1000,st("Open")],[dt(2),"Yoghurt",600,st("Draft")]]),
+stocksup:st3("Stock & Supplies","Catalogue of materials with units and reorder levels.",["Code","Item","Category","Unit"],[["RM-01","Starter culture","Raw material","kg"],["PK-02","500 ml pouches","Packaging","pcs"],["CN-03","Sanitiser","Consumable","L"],["PK-04","Cartons","Packaging","pcs"]]),
+sups:st3("Suppliers","Registered suppliers and terms.",["Supplier","Supplies","Terms","Status"],[["Highland Packaging","Pouches, cartons","30 days",st("Active")],["Tharaka Feeds","Animal feed","14 days",st("Active")],["CleanCo Kenya","Sanitation","Cash",st("Active")]]),
+grn:st3("Goods Received","Stock rises only when a receipt is posted here, never when an order is raised.",["GRN","PO","Item","Quantity","Date"],[["GRN-071","PO-118","500 ml pouches","3,000",dt(-2)]]),
+orders:st3("Customer Orders","Orders waiting for approval or dispatch.",["Order","Customer","Product","Litres","Status"],[["SO-310","Tharaka Supermarket","Pasteurised milk",400,st("Approved")],["SO-311","Chuka University Canteen","Pasteurised milk",250,st("Draft")]]),
+ret:st3("Returns & Credit Notes","Credit notes need approval and are audited.",["Credit note","Reason","Amount","Status"],[["CN-005","Sour on delivery",KES(1240),st("Approved")]]),
+coa:st3("Chart of Accounts","Accounts behind the simple reports here. A full double-entry ledger is a later phase.",["Code","Account","Type"],[["1000","Cash and M-Pesa","Asset"],["1100","Customer receivables","Asset"],["1200","Milk inventory","Asset"],["2000","Farmer payables","Liability"],["2100","Supplier payables","Liability"],["4000","Milk and product sales","Income"],["5000","Milk purchases","Cost"],["6000","Operating expenses","Expense"]]),
+bank:["Bank & M-Pesa Reconciliation","Match recorded receipts and pay-outs to statements. No provider is connected in this demo.",["Reference","Recorded","Statement","Status"],()=>[...PAY.map(p=>[p.no,KES(p.amt),"Not imported",st("Open")]),...B.filter(b=>b.paid).map(b=>[b.ref,KES(sum(b.it,x=>x.n)),"Simulated",st("Simulated")])]],
+train:st3("Training","Training sessions and attendance.",["Date","Topic","Trainer","Attended"],[[dt(-20),"Milk hygiene","County extension officer",18],[dt(5),"Mastitis control","Veterinary officer","Planned"]]),
+comp:["Complaints","Open complaints and their resolution.",["Farmer","Issue","Opened","Status"],()=>[["Karimi Mwiti","Late payment",dt(-4),st("Open")],["Makena Mugo","Scale reading dispute",dt(-8),st("Delivered")]]],
+memc:st3("Member Communications","Announcements sent to members.",["Date","Subject","Audience","Status"],[[dt(-6),"AGM notice","All farmers",st("Delivered")],[dt(2),"Price review","All farmers",st("Draft")]]),
+trans:["Transport & Deliveries","Trip records and handovers. No GPS is implied.",["Trip","Vehicle","Litres","Exceptions"],()=>[["Chuka to plant","KDA 214X",fmt(sum(D.filter(d=>d.centre=="Chuka"&&d.s=="Accepted"),d=>d.l)),"None"],["Kibugua to plant","KCB 880T",fmt(sum(D.filter(d=>d.centre=="Kibugua"&&d.s=="Accepted"),d=>d.l)),"None"]]],
+maint:st3("Maintenance & Repairs","Work orders and repair costs.",["Order","Asset","Issue","Cost","Status"],[["WO-41","Platform scale","Recalibrate",KES(3500),st("Open")],["WO-40","Bulk chiller","Compressor service",KES(12500),st("Delivered")]]),
+calib:st3("Calibration Records","Scales and analysers. Changes need permission.",["Asset","Last calibrated","Next due","Status"],[["Platform scale, Kibugua",dt(-60),dt(-2),st("Open")],["Milk analyser",dt(-10),dt(80),st("Passed")]]),
+recall:st3("Product Recalls","Holds and recalls, traced to source batches.",["Recall","Batch","Reason","Status"],[],),
+animals:st3("Animal Register","Optional module, used when the business keeps animals.",["Animal","Breed","Born","Owner"],[["Cow 014","Friesian","2020","Cooperative farm"],["Cow 021","Ayrshire","2021","Cooperative farm"],["Cow 007","Jersey","2019","Cooperative farm"]]),
+milkprod:st3("Milk Production","Yield by animal.",["Animal","Litres per day","Period"],[["Cow 014",18.5,"This week"],["Cow 021",14,"This week"],["Cow 007",9.5,"This week"]]),
+feed:st3("Feeding Records","Feed given and cost.",["Date","Feed","Quantity","Cost"],[[dt(-1),"Napier and dairy meal","60 kg",KES(2100)],[dt(-2),"Hay","40 kg",KES(1200)]]),
+breed:st3("Breeding & Calving","Service, pregnancy and calving records.",["Animal","Event","Date"],[["Cow 021","Calved",dt(-30)],["Cow 014","Served",dt(-45)]]),
+vet:st3("Veterinary Records","Treatments and vaccinations.",["Animal","Treatment","Date","Withdrawal"],[["Cow 007","Mastitis treatment",dt(-3),"Milk held 4 days"],["Cow 014","FMD vaccine",dt(-9),"None"]]),
+ahr:st3("Animal Health Reports","Summary of herd health events.",["Month","Treatments","Vaccinations","Mortality"],[["This month",1,1,0]]),
+appr:st3("Approval Workflows","Actions that need a second person.",["Action","Maker","Approver","Rule"],[["Settlement batch","Accountant","Manager","Creator cannot approve"],["Stock adjustment","Storekeeper","Manager","Reason required"],["Price change","Manager","Auditor review","Audited"]])});
+GEN.recall[3]=()=>[];
+GEN.inv[0]="Inventory Overview";[["clean","Cleaning & Sanitation"],["meet","Meetings & Attendance"],["veh","Vehicles & Drivers"],["eq","Equipment Register"],["sup","Supplier Payables"],["proc","Purchase Orders"]].forEach(([k,t])=>GEN[k][0]=t);
+const gen=k=>{const g=GEN[k];return head(g[0],g[1],NAV[gi(k)][0])+`<div class="card">${tbl(g[2],g[3]())}</div>`};
+const alerts=()=>{const n=[];D.filter(d=>d.s=="Pending").forEach(d=>n.push(["Test due",d.ref+" is waiting for a quality test"]));B.filter(b=>b.s=="Draft").forEach(b=>n.push(["Approval",b.id+" awaits approval"]));B.filter(b=>b.s=="Approved").forEach(b=>n.push(["Payment",b.id+" is approved and not yet paid"]));I.filter(i=>invBal(i)>.001).forEach(i=>n.push(["Receivable",i.no+" has "+KES(invBal(i))+" outstanding"]));n.push(["Low stock","500 ml pouches are below reorder level"]);if(T.some(t=>!DIP[t.id]))n.push(["Reconciliation","Physical tank readings are pending"]);n.push(["SMS","SMS is in demo mode. No messages are sent."]);return n};
+function dipR(){need("xfer");const t=v("rt"),l=v("dpr");if(l==="")throw Error("Enter the dip reading in litres");DIP[t]={l:+l,v:+l-bal(t),t:dt()+" "+tm()};aud("Physical dip recorded",t,l+" L read, ledger "+fmt(bal(t))+" L");toast("Dip recorded. Variance "+fmt(DIP[t].v)+" L")}
+function dip(t,l){need("xfer");l=+l;if(!(l>=0)||v("dp"+t)==="")throw Error("Enter the dip reading in litres");DIP[t]={l,v:l-bal(t),t:dt()+" "+tm()};aud("Physical dip recorded",t,l+" L read, ledger "+fmt(bal(t))+" L");toast("Dip recorded. Variance "+fmt(DIP[t].v)+" L")}
+const advPage=(t,g)=>head(t,"Advances are a financial obligation, recovered up to 50% of each settlement so nothing is deducted twice.",g)+`<div class="card">${tbl(["Farmer","Outstanding advance","Maximum recovery next batch"],F.filter(f=>f.advance>0).map(f=>[f.name,KES(f.advance),KES(Math.min(f.advance,liab(f.id)*.5))]),"No outstanding advances.")}</div>`;
+const tkRows=()=>L.slice(-30).reverse().map(l=>[l.d,Tk(l.tank).name,l.type,(l.q>0?"+":"")+fmt(l.q),l.ref,l.src]);
+const PGX={
+payables(){return head("Farmer Payables","Unsettled value, amounts in open batches and amounts paid are kept apart.","Farmer Payments")+`<div class="card">${tbl(["Farmer","Unsettled milk value","In open batches (net)","Paid (net)"],F.map(f=>[f.name,KES(liab(f.id)),KES(sum(B.filter(b=>b.s!="Paid").flatMap(b=>b.it.filter(x=>x.fid==f.id)),x=>x.n)),KES(sum(B.filter(b=>b.paid).flatMap(b=>b.it.filter(x=>x.fid==f.id)),x=>x.n))]))}</div>`},
+calc(){return head("Payment Calculations","Accepted litres × rate. Rejected milk is excluded.","Farmer Payments")+`<div class="card">${tbl(["Ref","Farmer","Accepted L","Rate","Gross value","Settlement"],P.slice(-20).reverse().map(p=>[p.ref,Fm(p.fid).name,p.l,KES(R.price),KES(p.g),p.b||st("Pending")]))}</div>`},
+deduct(){return advPage("Deductions & Advances","Farmer Payments")},adv(){return advPage("Farmer Advances","Cooperative Services")},
+payhist(){return head("Payment History","Pay-outs released from approved batches (simulated).","Farmer Payments")+`<div class="card">${tbl(["Batch","Reference","Farmer","Net paid"],B.filter(b=>b.paid).flatMap(b=>b.it.map(x=>[b.id,b.ref,Fm(x.fid).name,KES(x.n)])),"No payments released yet.")}</div>`},
+yield(){return head("Production Yields","Output against milk used, with losses.","Production")+`<div class="card">${tbl(["Batch","Product","Milk in","Output","Yield","Loss"],PB.map(b=>[b.n,b.p,fmt(b.in),fmt(b.out),(b.out/b.in*100).toFixed(1)+"%",fmt(b.loss)+" L"]),"Run a batch under Processing Batches.")}</div>`},
+moves(){return head("Stock Movements","Milk ledger. Every movement has a source and reference.","Inventory & Procurement")+`<div class="card">${tbl(["When","Tank","Type","Litres","Reference","Source"],tkRows())}</div>`},
+cust(){return head("Customers","Accounts, credit limits and balances.","Sales & Distribution")+`<div class="card">${tbl(["Customer","Credit limit","Invoices","Balance"],C.map(c=>[c.name,KES(c.limit),I.filter(i=>i.c==c.id).length,KES(sum(I.filter(i=>i.c==c.id),invBal))]))}</div>`},
+disp(){return head("Dispatch & Deliveries","Each invoice posts one dispatch from a tank.","Sales & Distribution")+`<div class="card">${tbl(["Delivery note","Customer","From","Litres","Status"],I.map(i=>["DN-"+i.no.slice(4),C.find(c=>c.id==i.c).name,Tk(i.tank).name,i.l,st("Delivered")]))}</div>`},
+finrep(){return head("Financial Reports","Sales by customer with receipts.","Finance")+`<div class="card">${tbl(["Customer","Invoiced","Received","Outstanding"],C.map(c=>{const x=I.filter(i=>i.c==c.id);return[c.name,KES(sum(x,i=>i.amt)),KES(sum(x,i=>i.amt-invBal(i))),KES(sum(x,invBal))]}))}</div>`},
+autosms(){return head("Automatic Farmer SMS","Sent on delivery, quality result and verified payment. All simulated here.","Communications")+`<div class="card">${tbl(["Time","To","Kind","Message"],SM.filter(m=>m.kind!="Bulk").slice(0,20).map(m=>[m.t,m.to,m.kind,`<span style="white-space:normal">${m.msg}</span>`]),"Record a delivery to generate a message.")}</div>`},
+qrec(){return head("Quality Records","All test results with their reasons.","Food Safety & Compliance")+`<div class="card">${tbl(["Ref","Farmer","Fat %","Temp","Result","Reason"],D.filter(d=>d.s!="Pending").slice(-25).reverse().map(d=>[d.ref,Fm(d.fid).name,d.fat,d.temp,st(d.s),d.why||"-"]))}</div>`},
+nc(){return head("Non-Conformities","Raised automatically when milk is rejected.","Food Safety & Compliance")+`<div class="card">${tbl(["Delivery","Farmer","Finding","Status"],D.filter(d=>d.s=="Rejected").reverse().map(d=>[d.ref,Fm(d.fid).name,d.why,st("Open")]),"No non-conformities.")}</div>`},
+tankloc(){return head("Tanks & Storage Locations","Capacity and current recorded stock.","Administration")+`<div class="card">${tbl(["Tank","Centre","Capacity","Recorded stock","Status"],T.map(t=>[t.name,t.centre,fmt(t.cap)+" L",fmt(bal(t.id))+" L",st("Active")]))}</div>`}};
+const PG={
+overview(){const a=D.filter(d=>d.date==dt()),te=a.filter(d=>d.s!="Pending"),rc=sum(a,d=>d.l),ac=sum(a.filter(d=>d.s=="Accepted"),d=>d.l),rj=sum(a.filter(d=>d.s=="Rejected"),d=>d.l),tl=sum(te,d=>d.l),pen=B.filter(b=>b.s=="Draft").length+D.filter(d=>d.s=="Pending").length,s=ty=>sum(L.filter(l=>l.type==ty),l=>l.q),out=-(s("Dispatch")+s("Processing")+s("Transfer out")+s("Loss")),dv=T.filter(t=>DIP[t.id]).length,vv=sum(T.filter(t=>DIP[t.id]),t=>Math.abs(DIP[t.id].v));
+const K=(l,b,f)=>`<div class="k"><span>${l}</span><b>${b}</b><small>${f}</small></div>`;
+return head("Operational Overview","A clear view of milk, money and activity across your dairy.","Workspace")+`<div class="dm"><b>DEMO DATA</b> Figures are illustrative. SMS and M-Pesa are simulated and nothing is sent. <button onclick="journey()" style="margin-left:8px">Run guided demo</button></div>
+<div class="grid">${K("Milk received today",fmt(rc)+" L","All deliveries recorded today")}${K("Milk accepted today",fmt(ac)+" L","After quality checks")}${K("Milk rejected today",fmt(rj)+" L","Each rejection has a reason")}${K("Quality acceptance",tl?(ac/tl*100).toFixed(1)+"%":"–","Accepted ÷ tested today")}${K("Recorded milk stock",fmt(stock())+" L","Ledger balance, all centres")}</div>
+<div class="grid">${K("Owed to farmers",KES(liab()),"Unsettled accepted milk")}${K("Customer receivables",KES(recv()),"Unpaid customer invoices")}${K("Pending approvals / tests",pen,"Needs authorised review")}${K("SMS status",SM.length+" queued",'<span class="b a">Demo mode · not sent</span>')}</div>
+<div class="two"><div class="card"><h3>Tank levels</h3>${T.map(t=>{const d=DIP[t.id];return`<div class="tk"><div class="rl"><b>${t.name}</b><span>${fmt(bal(t.id))} / ${fmt(t.cap)} L</span></div><div class="bar"><i style="width:${Math.min(100,bal(t.id)/t.cap*100)}%"></i></div><small class="mu">${(bal(t.id)/t.cap*100).toFixed(1)}% used · ${fmt(t.cap-bal(t.id))} L free${d?` · dip ${fmt(d.l)} L, variance ${fmt(d.v)} L`:""}</small><div class="f"><input id="dp${t.id}" type="number" step="any" placeholder="Dip reading L" aria-label="Dip reading"><button class="s" onclick="run(()=>dip('${t.id}',v('dp${t.id}')))">Record dip</button></div></div>`}).join("")}<small class="mu">Recorded stock is not a physical measurement. Enter a dip reading to verify actual levels.</small></div>
+<div class="card"><h3>Milk reconciliation</h3><div class="rl"><span>Opening stock</span><strong>${fmt(s("Opening"))} L</strong><span>Accepted receipts</span><strong>${fmt(s("Receipt"))} L</strong><span>Transfers in</span><strong>${fmt(s("Transfer in"))} L</strong><span>Recorded outflows</span><strong>${fmt(out)} L</strong><span>Ledger closing balance</span><strong>${fmt(stock())} L</strong></div><p>${dv<T.length?'<span class="b a">Physical stock verification pending</span>':vv<.001?'<span class="b g">Verified: variance 0 L</span>':'<span class="b r">Unexplained variance '+fmt(vv)+' L</span>'}</p><small class="mu">Ledger variance is not confirmed until physical readings are recorded and reviewed. <a href="#" onclick="go('recon');return false">Open reconciliation</a></small></div></div>
+<div class="card"><h3>Needs attention</h3>${alerts().slice(0,5).map(x=>`<div class="al"><i>!</i><div><b>${x[0]}</b><br><small class="mu">${x[1]}</small></div></div>`).join("")}</div>
+<div class="card"><h3>Recent activity</h3>${tbl(["When","Who","Action","Record"],A.slice(0,6).map(a=>[a.t,a.u,a.a,a.r]))}</div>`},
+notif(){return head("Notifications","Alerts generated from open work.","Workspace")+`<div class="card">${tbl(["Type","Message"],alerts(),"Nothing needs attention.")}</div>`},
+reports(){const rows=["Chuka","Kibugua"].map(c=>{const x=D.filter(d=>d.centre==c);return[c,fmt(sum(x,d=>d.l)),fmt(sum(x.filter(d=>d.s=="Accepted"),d=>d.l)),fmt(sum(x.filter(d=>d.s=="Rejected"),d=>d.l))]});return head("Reports","Totals by centre. Each figure sums the delivery records.","Workspace")+`<div class="card"><h3>Collection by centre (litres)</h3>${tbl(["Centre","Received","Accepted","Rejected"],rows)}</div><div class="card"><h3>Top suppliers by accepted litres</h3>${tbl(["Farmer","Accepted L","Value"],F.map(f=>[f.name,sum(acc().filter(d=>d.fid==f.id),d=>d.l)]).sort((a,b)=>b[1]-a[1]).slice(0,6).map(r=>[r[0],fmt(r[1]),KES(r[1]*R.price)]))}</div>`},
+biz(){return head("Business Case","Adjust the assumptions to match the cooperative in the room. Figures are illustrative, not measured.","Workspace")+`<div class="card"><div class="f">${fl("Farmers","b1","number",2000)}${fl("Litres per farmer per day","b2","number",8)}${fl("Price per litre (KES)","b3","number",R.price)}${fl("Value lost to disputes and manual errors (%)","b4","number",2)}${fl("Annual system cost (KES)","b5","number",600000)}</div><div id="bo"></div></div>`},
+farmers(){return head("Farmers","Register farmers and see their delivery and payable position.","Farmer Management")+`<div class="card"><h3>Register farmer</h3><div class="f">${fl("Full name","fn")}${fl("Phone","fp")}${fl("Centre","fc","sel",["Chuka","Kibugua"])}<button onclick="run(()=>{const f=register(v('fn'),v('fp'),v('fc'));toast('Registered '+f.id)})">Register</button></div></div><div class="card">${tbl(["No.","Name","Phone","Centre","Accepted L","Owed","Status"],F.map(f=>[f.id,f.name,f.phone,f.centre,fmt(sum(acc().filter(d=>d.fid==f.id),d=>d.l)),KES(liab(f.id)),st("Active")]))}</div>`},
+stmts(){return head("Farmer Statements","Gross value, deductions, paid and remaining liability stay separate.","Farmer Management")+`<div class="card">${tbl(["Farmer","Gross value","Advances","Paid (net)","Remaining liability"],F.map(f=>{const g=sum(P.filter(p=>p.fid==f.id),p=>p.g),pd=sum(B.filter(b=>b.paid).flatMap(b=>b.it.filter(x=>x.fid==f.id)),x=>x.n);return[f.name,KES(g),KES(f.advance),KES(pd),KES(liab(f.id))]}))}</div>`},
+milk(){const fo=F.map(f=>[f.id,f.id+" "+f.name]);return head("Milk Collection","Record a delivery. It stays Pending until quality testing, so unaccepted milk never reaches stock or payables.","Milk Operations")+`<div class="card"><div class="f">${fl("Farmer","mf","sel",fo)}${fl("Litres","ml","number","")}<button onclick="run(()=>{const d=collect(v('mf'),v('ml'));toast('Recorded '+d.ref+'. SMS queued (simulated)')})">Save delivery</button></div></div><div class="card">${tbl(["Ref","Date","Farmer","Centre","Litres","Status","By"],D.slice(-15).reverse().map(d=>[d.ref,d.date,Fm(d.fid).name,d.centre,d.l,st(d.s),d.by]))}</div>`},
+qc(){const p=D.filter(d=>d.s=="Pending");return head("Quality Control","Rules come from Quality Rules. Rejected milk is blocked from stock and payment.","Milk Operations")+`<div class="card"><h3>Test a delivery</h3>${p.length?`<div class="f">${fl("Delivery","qd","sel",p.map(d=>[d.id,d.ref+" · "+Fm(d.fid).name+" · "+d.l+" L"]))}${fl("Fat %","qf","number",3.8)}${fl("Temp °C","qt","number",5)}${fl("Antibiotic","qa","sel",["Negative","Positive"])}<button onclick="run(()=>{qtest(v('qd'),v('qf'),v('qt'),v('qa'));toast('Result recorded and SMS queued')})">Record result</button></div>`:`<div class="empty">No deliveries waiting for a test.</div>`}</div><div class="card">${tbl(["Ref","Farmer","Fat %","Temp","Result","Reason"],D.filter(d=>d.s!="Pending").slice(-15).reverse().map(d=>[d.ref,Fm(d.fid).name,d.fat,d.temp,st(d.s),d.why||"-"]))}</div>`},
+tanks(){const to=T.map(t=>[t.id,t.name]);return head("Milk Storage & Tanks","Balance is calculated from the ledger below, never typed in.","Milk Operations")+`<div class="grid">${T.map(t=>`<div class="k"><span>${t.name}</span><b>${fmt(bal(t.id))} L</b><div class="bar"><i style="width:${Math.min(100,bal(t.id)/t.cap*100)}%"></i></div><small>${fmt(t.cap)} L capacity</small></div>`).join("")}</div><div class="card"><h3>Record a loss</h3><div class="f">${fl("Tank","lt","sel",to)}${fl("Litres","ll","number","")}${fl("Reason","lr","text","Spillage")}<button class="s" onclick="run(()=>{loss(v('lt'),v('ll'),v('lr'));toast('Loss posted')})">Post loss</button></div></div><div class="card"><h3>Inventory ledger</h3>${tbl(["When","Tank","Type","Litres","Reference","Source"],tkRows().slice(0,14))}</div>`},
+xfer(){const to=T.map(t=>[t.id,t.name]);return head("Milk Transfers","Moves post as paired ledger entries.","Milk Operations")+`<div class="card"><div class="f">${fl("From","xa","sel",to)}${fl("To","xb","sel",[...to].reverse())}${fl("Litres","xl","number","")}<button onclick="run(()=>{xfer(v('xa'),v('xb'),v('xl'));toast('Transfer posted')})">Transfer</button></div></div><div class="card">${tbl(["When","From","To","Litres","Status"],XF.map(x=>[x.d,x.a,x.b,x.l,st("Approved")]))}</div>`},
+recon(){return head("Milk Reconciliation","Opening + receipts + transfers in = outflows + closing. Record a physical dip to expose differences.","Milk Operations")+`<div class="card"><div class="f">${fl("Tank","rt","sel",T.map(t=>[t.id,t.name]))}${fl("Dip reading (L)","dpr","number","")}<button onclick="run(()=>dipR())">Record dip</button></div></div><div class="card">${tbl(["Tank","Opening","Receipts","Transfers in","Processing","Dispatch","Transfers out","Losses","Ledger closing","Physical dip","Variance"],T.map(t=>{const s=ty=>sum(L.filter(l=>l.tank==t.id&&l.type==ty),l=>l.q),d=DIP[t.id];return[t.name,fmt(s("Opening")),fmt(s("Receipt")),fmt(s("Transfer in")),fmt(-s("Processing")),fmt(-s("Dispatch")),fmt(-s("Transfer out")),fmt(-s("Loss")),fmt(bal(t.id)),d?fmt(d.l):"Not recorded",d?`<b style="color:${Math.abs(d.v)>.001?"var(--er)":"var(--ac)"}">${fmt(d.v)} L</b>`:"Pending"]}))}</div>`},
+settle(){return head("Settlement Batches","Accountant prepares, Manager approves, then payment is released. Switch role in the top bar to try it.","Finance")+`<div class="card"><button onclick="run(()=>{mkBatch();toast('Batch drafted')})">Create settlement batch</button> <span class="sub">Unsettled liability: ${KES(liab())}</span></div>${B.length?B.slice().reverse().map(b=>`<div class="card"><h3>${b.id} ${st(b.s)} <small>by ${b.by}${b.ref?" · ref "+b.ref+" (simulated)":""}</small></h3>${tbl(["Farmer","Litres","Gross","Advance recovered","Net payable"],b.it.map(x=>[Fm(x.fid).name,fmt(x.l),KES(x.g),KES(x.dd),KES(x.n)]))}<p>${b.s=="Draft"?`<button onclick="run(()=>{apprB('${b.id}');toast('Approved')})">Approve</button>`:""}${b.s=="Approved"?`<button onclick="run(()=>{payB('${b.id}');toast('Payment released (simulated). Confirmation SMS queued')})">Release payment</button>`:""}</p></div>`).join(""):`<div class="card"><div class="empty">No batches yet.</div></div>`}`},
+sales(){return head("Sales Invoices","Dispatch posts stock once. An invoice is not a payment.","Finance")+`<div class="card"><h3>Dispatch and invoice</h3><div class="f">${fl("Customer","sc","sel",C.map(c=>[c.id,c.name]))}${fl("From tank","st","sel",T.map(t=>[t.id,t.name]))}${fl("Litres","sl","number","")}<button onclick="run(()=>{sell(v('sc'),v('st'),v('sl'));toast('Invoice issued')})">Issue invoice</button></div><small>Price KES ${R.sale} per litre</small></div><div class="card">${tbl(["Invoice","Date","Customer","Litres","Amount","Paid","Balance"],I.slice().reverse().map(i=>[i.no,i.date,C.find(c=>c.id==i.c).name,i.l,KES(i.amt),KES(i.amt-invBal(i)),KES(invBal(i))]))}</div>`},
+recv(){const o=I.filter(i=>invBal(i)>.001);return head("Customer Receivables","Record payments separately from invoices.","Finance")+`<div class="card">${o.length?`<div class="f">${fl("Invoice","pi","sel",o.map(i=>[i.no,i.no+" · balance "+fmt(invBal(i))]))}${fl("Amount","pa","number","")}${fl("Method","pm","sel",["M-Pesa (simulated)","Bank","Cash"])}<button onclick="run(()=>{payI(v('pi'),v('pa'),v('pm'));toast('Payment recorded')})">Record payment</button></div>`:`<div class="empty">All invoices are settled.</div>`}</div><div class="card"><h3>Outstanding by customer</h3>${tbl(["Customer","Balance","Credit limit"],C.map(c=>[c.name,KES(sum(I.filter(i=>i.c==c.id),invBal)),KES(c.limit)]))}</div><div class="card"><h3>Receipts</h3>${tbl(["Receipt","Date","Invoice","Amount","Method"],PAY.slice().reverse().map(p=>[p.no,p.date,p.inv,KES(p.amt),p.m]))}</div>`},
+fin(){const rev=sum(I,i=>i.amt),cost=sum(P,p=>p.g),ex=20700;return head("Financial Overview","Simple profit and cash summary built from posted records. This is not a full general ledger.","Finance")+`<div class="grid"><div class="k"><span>Sales invoiced</span><b>${KES(rev)}</b></div><div class="k"><span>Milk cost (accepted)</span><b>${KES(cost)}</b></div><div class="k"><span>Operating expenses</span><b>${KES(ex)}</b></div><div class="k"><span>Gross result</span><b>${KES(rev-cost-ex)}</b></div></div><div class="card">${tbl(["Cash","Amount"],[["Receipts from customers",KES(sum(PAY,p=>p.amt))],["Farmer pay-outs (simulated)",KES(sum(B.filter(b=>b.paid).flatMap(b=>b.it),x=>x.n))]])}</div>`},
+prod(){return head("Processing Batches","Raw milk is consumed once, finished product is created once, and yield is reported.","Production")+`<div class="card"><div class="f">${fl("Tank","pt","sel",T.map(t=>[t.id,t.name]))}${fl("Product","pp","sel",["Pasteurised","Yoghurt","Fermented milk"])}${fl("Litres in","pl","number","")}<button onclick="run(()=>{produce(v('pt'),v('pl'),v('pp'));toast('Batch posted')})">Run batch</button></div></div><div class="card">${tbl(["Batch","Product","Milk in","Output","Loss","Mfg","Expiry"],PB.slice().reverse().map(b=>[b.n,b.p,fmt(b.in),fmt(b.out),fmt(b.loss),b.mfg,b.exp]))}</div>`},
+fp(){const g={};PB.forEach(b=>g[b.p]=(g[b.p]||0)+b.out);return head("Finished Products","Stock created by production batches.","Production")+`<div class="card">${tbl(["Product","Litres on hand"],Object.entries(g).map(([k,x])=>[k,fmt(x)]))}</div>`},
+trace(){return head("Batch Traceability","From finished batch back to source tank and farmers.","Food Safety & Compliance")+`<div class="card">${tbl(["Batch","Product","Source tank","Source farmers","Expiry"],PB.map(b=>[b.n,b.p,Tk(b.tank).name,b.src.map(f=>Fm(f).name).join(", "),b.exp]),"Run a production batch to see traceability.")}</div>`},
+smsd(){return head("SMS Dashboard","All messages are simulated. Provider acceptance is not delivery.","Communications")+`<div class="grid"><div class="k"><span>Messages</span><b>${SM.length}</b></div><div class="k"><span>Estimated cost</span><b>${KES(SM.length*R.sms)}</b></div><div class="k"><span>Delivered (confirmed)</span><b>0</b></div></div><div class="card">${tbl(["Kind","Count"],["Delivery","Quality","Payment","Bulk"].map(k=>[k,SM.filter(m=>m.kind==k).length]))}</div>`},
+bulk(){return head("Send Bulk SMS","Preview recipients and cost before queuing.","Communications")+`<div class="card"><div class="f">${fl("Audience","ba","sel",["All farmers","Chuka farmers","Kibugua farmers"])}</div><label>Message<br><textarea id="bm" rows="3" style="width:100%" oninput="bprev()">Dear {name}, the cooperative meeting is on Friday at 10am.</textarea></label><p id="bp"></p><button onclick="run(()=>{need('sms');const r=bl();r.forEach(f=>sms(f.phone,v('bm').replace('{name}',f.name.split(' ')[0]),'bulk:'+seq+f.id,'Bulk'));seq++;aud('Bulk SMS queued','Campaign',r.length+' recipients');toast('Queued '+r.length+' simulated messages')})">Queue campaign</button></div>`},
+hist(){return head("Message History","Newest first. Each message has a unique event key, so retries cannot send twice.","Communications")+`<div class="card">${tbl(["Time","To","Kind","Message","Status"],SM.slice(0,25).map(m=>[m.t,m.to,m.kind,`<span style="white-space:normal">${m.msg}</span>`,st("Simulated")]))}</div>`},
+dlr(){return head("Delivery Reports","No provider is connected, so nothing is marked delivered.","Communications")+`<div class="card">${tbl(["Status","Count"],[["Accepted by provider (simulated)",SM.length],["Delivered (confirmed)",0],["Failed",0]])}</div>`},
+users(){return head("Users & Roles","Menus follow role, and the server enforces access. Switch role in the top bar.","Administration")+`<div class="card">${tbl(["Role","Areas visible","Can do"],Object.keys(ROLES).map(r=>[r,ROLES[r].map(i=>NAV[i][0]).join(", "),r=="Auditor"?"Read only":Object.keys(CAN).filter(a=>CAN[a].includes(r)).join(", ")]))}</div>`},
+price(){return head("Products & Pricing","Changing the price affects future accruals only. The change is audited.","Administration")+`<div class="card"><div class="f">${fl("Farmer price per litre","pr1","number",R.price)}${fl("Sale price per litre","pr2","number",R.sale)}<button onclick="run(()=>{need('admin');R.price=+v('pr1');R.sale=+v('pr2');aud('Prices changed','Pricing',R.price+' / '+R.sale);toast('Saved')})">Save</button></div></div>`},
+rules(){return head("Quality Rules","Thresholds are configurable and must be confirmed against Kenyan requirements before go-live.","Administration")+`<div class="card"><div class="f">${fl("Minimum fat %","ru1","number",R.minFat)}${fl("Maximum temperature °C","ru2","number",R.maxTemp)}<button onclick="run(()=>{need('admin');R.minFat=+v('ru1');R.maxTemp=+v('ru2');aud('Quality rules changed','Rules',R.minFat+'% / '+R.maxTemp+'°C');toast('Saved')})">Save</button></div></div>`},
+audit(){return head("Audit Trail","Every sensitive action with who, when and what. Entries cannot be edited here.","Administration")+`<div class="card">${tbl(["When","Actor","Action","Record","Detail"],A.slice(0,60).map(a=>[a.t,a.u,a.a,a.r,a.x]))}</div>`}};
+function bl(){const a=v("ba");return F.filter(f=>a=="All farmers"||a.startsWith(f.centre))}
+function bprev(){const r=bl();$("bp").textContent=`${r.length} recipients · estimated cost ${KES(r.length*R.sms)} · sample: ${v("bm").replace("{name}",r[0]?r[0].name.split(" ")[0]:"")}`}
+function dipv(t){const x=+v("dip"+t)-bal(t),e=$("var"+t);e.textContent=fmt(x)+" L";e.style.color=Math.abs(x)>.001?"var(--er)":""}
+function bizc(){const g=i=>+v(i)||0,y=g("b1")*g("b2")*365*g("b3"),r=y*g("b4")/100;$("bo").innerHTML=`<div class="grid"><div class="k"><span>Annual milk value handled</span><b>${KES(y)}</b></div><div class="k"><span>Value protected</span><b>${KES(r)}</b></div><div class="k"><span>Net after system cost</span><b>${KES(r-g("b5"))}</b></div></div>`}
+const IC={chev:'<path d="M6 9l6 6 6-6"/>',grid:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21h4"/>',chart:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>',coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0 1 14 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 4 6"/>',card:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/>',doc:'<path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7"/>',heart:'<path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2 4.5 4.5 0 0 1 8 2c0 6-8 11-8 11z"/>',drop:'<path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/>',check:'<path d="M5 12l5 5 9-10"/>',tank:'<rect x="5" y="4" width="14" height="16" rx="3"/><path d="M5 10h14"/>',swap:'<path d="M4 8h14l-3-3M20 16H6l3 3"/>',balance:'<path d="M12 4v16M6 20h12M5 7h14"/><path d="M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/>',calc:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M8 16h2M12 16h2"/>',pct:'<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',flask:'<path d="M9 3h6M10 3v6L4 19a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-6-10V3"/>',box:'<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>',map:'<path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',book:'<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/>',truck:'<path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',cart:'<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M3 4h3l3 11h10l2-8H7"/>',receipt:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>',ret:'<path d="M9 7L4 12l5 5M4 12h11a5 5 0 0 1 0 10h-3"/>',bank:'<path d="M3 10l9-6 9 6M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18"/>',msg:'<path d="M4 5h16v11H9l-5 4z"/>',send:'<path d="M3 11l18-8-8 18-2-8z"/>',cap:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',flag:'<path d="M5 21V4h12l-2 4 2 4H5"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',wrench:'<path d="M14 6a4 4 0 0 0 5 5l-9 9a2 2 0 0 1-3-3l9-9a4 4 0 0 0-2-2z"/>',thermo:'<path d="M10 14V5a2 2 0 0 1 4 0v9a4 4 0 1 1-4 0z"/>',spark:'<path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/>',shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',leaf:'<path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14z"/><path d="M5 19l8-8"/>',tag:'<path d="M3 12V3h9l9 9-9 9z"/><circle cx="8" cy="8" r="1.5"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',plug:'<path d="M9 3v5M15 3v5M6 8h12v4a6 6 0 0 1-12 0zM12 18v3"/>',archive:'<rect x="3" y="4" width="18" height="5"/><path d="M5 9v10h14V9M10 13h4"/>'};
+const IM=Object.fromEntries("overview:grid,notif:bell,reports:chart,biz:coin,farmers:user,members:card,stmts:doc,fsvc:heart,milk:drop,qc:check,tanks:tank,xfer:swap,recon:balance,payables:coin,calc:calc,deduct:pct,settle:list,payhist:clock,pplan:calendar,prod:flask,yield:chart,fp:box,trace:map,inv:box,stocksup:book,moves:swap,adj:list,sups:truck,proc:cart,grn:receipt,cust:users,orders:cart,sales:receipt,disp:truck,ret:ret,recv:coin,fin:grid,coa:book,cash:coin,exp:receipt,sup:bank,bank:bank,finrep:chart,smsd:msg,autosms:send,bulk:send,tpl:doc,hist:clock,dlr:check,meet:calendar,train:cap,comp:flag,adv:coin,memc:msg,routes:map,veh:truck,trans:truck,eq:gear,maint:wrench,calib:balance,temp:thermo,clean:spark,qrec:check,nc:flag,ca:wrench,recall:shield,animals:leaf,milkprod:drop,feed:leaf,breed:heart,vet:heart,ahr:chart,users:users,br:map,tankloc:tank,price:tag,rules:flask,appr:check,audit:eye,integ:plug,sys:gear,bak:archive".split(",").map(s=>s.split(":")));
+const ic=n=>`<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||IC.doc}</svg>`;
+function tg(i){S.col=S.col||{};S.col[i]=!S.col[i];nav()}
+function nav(){const q=(S.q||"").toLowerCase(),gr=ROLES[S.role],sc=$("nl").scrollTop,bd={notif:alerts().length,qc:D.filter(d=>d.s=="Pending").length,settle:B.filter(b=>b.s!="Paid").length,recv:I.filter(i=>invBal(i)>.001).length};
+$("nl").innerHTML=NAV.map((g,i)=>{if(!gr.includes(i))return"";const it=g[1].filter(x=>x[1].toLowerCase().includes(q));if(!it.length)return"";const c=!q&&(S.col||{})[i];return`<button class="gt${c?" c":""}" aria-expanded="${!c}" onclick="tg(${i})"><span>${g[0]}</span>${ic("chev")}</button>`+(c?"":it.map(x=>`<a tabindex="0" class="${x[0]==S.route?"on":""}" onclick="go('${x[0]}')" onkeydown="if(event.key=='Enter')go('${x[0]}')">${ic(IM[x[0]])}<span class="tx">${x[1]}</span>${bd[x[0]]?`<span class="nb">${bd[x[0]]}</span>`:""}</a>`).join(""))}).join("");$("nl").scrollTop=sc;
+$("nf").innerHTML=`<span class="dot"></span>Demo environment · v0.2 preview<span class="av" title="${S.role}">${S.role.split(" ").map(w=>w[0]).join("").slice(0,2)}</span>`}
+function render(){const gr=ROLES[S.role];$("role").innerHTML=Object.keys(ROLES).map(r=>`<option${r==S.role?" selected":""}>${r}</option>`).join("");nav();$("bn").textContent=alerts().length;
+const ro=S.role=="Auditor"?'<div class="note">Read-only role. Actions will be refused.</div>':"";
+if(!gr.includes(gi(S.route))){$("pg").innerHTML=head("Access denied","Your role cannot open this area.")+`<div class="empty">Ask a System Administrator for access.</div>`;return}
+$("pg").innerHTML=ro+((PG[S.route]||PGX[S.route])?(PG[S.route]||PGX[S.route])():gen(S.route));if(S.route=="biz")bizc(),document.querySelectorAll("#pg input").forEach(e=>e.oninput=bizc);if(S.route=="bulk")bprev()}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms)),cap=(t)=>{const c=$("cap");c.textContent=t;c.style.display=t?"block":"none"};
+async function journey(){S.force=false;const step=async(t,r,f)=>{cap(t);S.route=r;render();await sleep(2400);try{f&&f()}catch(x){toast(x.message,1)}render();await sleep(2200)};
+try{S.role="Collection Clerk";let f,d;
+await step("1. Register a new farmer","farmers",()=>{f=register("Wambui Njiru","0722 555 019","Chuka")});
+await step("2. Record her milk delivery. The farmer gets an SMS (simulated).","milk",()=>{d=collect(f.id,85)});
+await step("3. A double-click or retry is blocked, so no duplicate record","milk",()=>{try{collect(f.id,85)}catch(x){toast(x.message,1)}});
+S.role="Quality Officer";
+await step("4. Quality test passes. Only now does milk enter the tank and the farmer’s payable","qc",()=>qtest(d.id,3.8,5,"Negative"));
+S.role="Collection Clerk";let d2=collect(f.id,60);S.role="Quality Officer";
+await step("5. A second delivery fails on fat. It is rejected, with no stock and no payment","qc",()=>qtest(d2.id,2.6,5,"Negative"));
+await step("6. Tank balance comes from the ledger","tanks");
+S.role="Accountant";await step("7. Accountant drafts the farmer settlement batch","settle",()=>mkBatch());
+await step("8. The same person cannot approve it (maker-checker)","settle",()=>{try{apprB(B[B.length-1].id)}catch(x){toast(x.message,1)}});
+S.role="Manager";await step("9. Manager approves and releases payment. SMS is sent only after payment","settle",()=>{apprB(B[B.length-1].id);payB(B[B.length-1].id)});
+S.role="Accountant";let n;await step("10. Dispatch 300 L to a hotel and invoice it","sales",()=>{sell("C1","TK-01",300);n=I[I.length-1].no});
+await step("11. Customer pays part of the invoice. Payment is separate from the invoice","recv",()=>payI(n,10000,"M-Pesa (simulated)"));
+S.role="Manager";await step("12. Record physical dip readings. Ledger and physical agree, variance 0","recon",()=>T.forEach(t=>{$("dp"+t.id);DIP[t.id]={l:bal(t.id),v:0,t:dt()}}));
+await step("13. Dashboard updated from the same records","overview");
+await step("14. Audit trail shows who did what","audit");cap("Demo complete. Explore any module from the sidebar.");setTimeout(()=>cap(""),5000)}catch(x){cap("");toast(x.message,1)}}
+(function init(){S.force=true;S.role="Manager";["Wanjiru Kinyua","Mwenda Mutwiri","Kagendo Murithi","Njeru Gitonga","Gacheri Muthomi","Kiambi Ntarangwi","Muthoni Mugambi","Karimi Mwiti","Mutuma Kirimi","Nkirote Rimberia","Kinoti Mbaabu","Makena Mugo"].forEach((n,i)=>register(n,"0712 000 "+(100+i),i%2?"Kibugua":"Chuka"));
+F.forEach((f,i)=>{if(i%4==0)f.advance=1500});T.forEach(t=>post(t.id,"Opening",400,"OPEN","Approved opening stock"));
+for(let o=-2;o<=0;o++)F.forEach((f,i)=>{const d=collect(f.id,20+(i*7+(o+3)*13)%60,o);qtest(d.id,(i*3+o)%11==0?2.8:3.4+((i+o+5)%6)/10,4+(i%3),"Negative")});
+sell("C1","TK-01",200);payI(I[0].no,5000,"M-Pesa (simulated)");
+SM.length=0;A.length=0;aud("Demo data loaded","System","Fictional records");S.force=false;render()})();
+</script><!--MZ-PRE--><script>if(T.length<5){T.push({id:"TK-03",name:"Njuri Tank 1",centre:"Njuri",cap:3000},{id:"TK-04",name:"Nthambo Tank 1",centre:"Nthambo",cap:2000},{id:"TK-05",name:"Kiracha Tank 1",centre:"Kiracha",cap:2000})}</script><!--MZ-PATCH--><script src="auth.js"></script><script>(function(){
+if(!window.Auth||!Auth.session()){location.replace("login.html");return}
+var ses=Auth.session(),acct=ACC.find(function(a){return a.e==ses.e}),Un=acct.n,ini=Un.split(" ").map(function(w){return w[0]}).join("").slice(0,2);
+var MAP={Manager:"Manager",Clerk:"Collection Clerk",Quality:"Quality Officer",Accountant:"Accountant",Store:"Storekeeper",Farmer:"Farmer",Customer:"Customer"};
+var HOME={"Manager":"overview","Collection Clerk":"overview","Quality Officer":"overview","Accountant":"overview","Storekeeper":"overview","Farmer":"f_home","Customer":"c_home"};
+var DEMO=false;
+
+/* ---- roles, permissions, menus ---- */
+CAN.xfer.push("Storekeeper");
+NAV.push(["My Farm Account",[["f_home","My Dashboard"],["f_del","My Deliveries"],["f_stmt","Payment Statement"],["f_msg","Notifications"]]]);
+NAV.push(["My Customer Account",[["c_home","My Dashboard"],["c_cat","Product Catalogue"],["c_ord","Orders & Delivery Status"],["c_inv","Invoices & Payments"]]]);
+ROLES["Storekeeper"]=[0,2,5,10];ROLES["Farmer"]=[14];ROLES["Customer"]=[15];
+IM.f_home="grid";IM.f_del="drop";IM.f_stmt="doc";IM.f_msg="msg";IM.c_home="grid";IM.c_cat="box";IM.c_ord="cart";IM.c_inv="receipt";
+var ITEMS={
+"Collection Clerk":"overview notif farmers milk reports autosms hist routes trans".split(" "),
+"Quality Officer":"overview notif qc qrec temp nc ca clean calib recall trace rules reports".split(" "),
+"Accountant":"overview notif reports stmts payables calc deduct settle payhist adv cust orders sales recv ret fin coa cash exp sup bank finrep sups proc".split(" "),
+"Storekeeper":"overview notif tanks xfer recon tankloc inv stocksup moves adj sups proc grn eq maint".split(" "),
+"Farmer":["f_home","f_del","f_stmt","f_msg"],"Customer":["c_home","c_cat","c_ord","c_inv"]};
+function allowed(r,role){role=role||S.role;if(r=="cal")return role!="Farmer"&&role!="Customer";if(r.indexOf("m2m_")==0)return !!(window.m2mOK&&window.m2mOK(r,role));if(ITEMS[role])return ITEMS[role].indexOf(r)>-1;return ROLES[role].indexOf(gi(r))>-1}
+
+/* ---- restore saved demo data so the workflow survives log out and log in ---- */
+(function(){var s;try{s=JSON.parse(localStorage.getItem("mz_erp"))}catch(e){}
+ if(!s||s.v!==1)return;
+ [["F",F],["D",D],["L",L],["P",P],["B",B],["SM",SM],["I",I],["PAY",PAY],["A",A],["PB",PB],["XF",XF]].forEach(function(p){p[1].splice.apply(p[1],[0,p[1].length].concat(s[p[0]]||[]))});
+ Object.keys(DIP).forEach(function(k){delete DIP[k]});Object.assign(DIP,s.DIP||{});Object.assign(R,s.R||{});seq=s.seq||seq})();
+function snap(){try{localStorage.setItem("mz_erp",JSON.stringify({v:1,F:F,D:D,L:L,P:P,B:B,SM:SM,I:I,PAY:PAY,A:A,PB:PB,XF:XF,DIP:DIP,R:R,seq:seq}))}catch(e){}}
+window.mzReset=function(){if(confirm("Reset all demo data to the starting set?")){localStorage.removeItem("mz_erp");location.reload()}};
+window.mzSwitch=function(sel){var pw=prompt("Confirm your password to switch role");if(pw!==null&&Auth.switchTo(sel.value,pw))location.reload();else{alert("Role switch denied.");sel.value=Auth.session().r}};
+window.mzSave=function(){run(function(){var d=collect(v("mf"),v("ml"));toast("Receipt "+d.ref+". SMS queued (simulated)")})};
+
+/* ---- helpers ---- */
+var K=function(l,b,f){return '<div class="k"><span>'+l+'</span><b>'+b+'</b><small>'+(f||"")+'</small></div>'};
+var CARD=function(t,h){return '<div class="card"><h3>'+t+'</h3>'+h+'</div>'};
+var today=function(){return D.filter(function(d){return d.date==dt()})};
+var myF=function(){return F.find(function(f){return f.phone.replace(/\s/g,"")==ses.e})||F[0]},myC=function(){return C[0]};
+var WS=function(m){return '<span style="white-space:normal">'+m+'</span>'};
+
+/* ---- role dashboards ---- */
+var ov0=PG.overview;
+function homeClerk(){var a=today();return head("Collection Dashboard","Deliveries, receipts and farmer confirmations for today.","Workspace")
++'<div class="grid">'+K("Deliveries today",a.length,"Recorded at the centres")+K("Litres received today",fmt(sum(a,function(d){return d.l}))+" L","All centres")+K("Awaiting quality test",D.filter(function(d){return d.s=="Pending"}).length,"Not in stock until tested")+K("Farmer SMS queued",SM.filter(function(m){return m.kind=="Delivery"}).length,"Simulated, not sent")+'</div>'
++CARD("Record a delivery",'<div class="f">'+fl("Farmer","mf","sel",F.map(function(f){return [f.id,f.id+" "+f.name]}))+fl("Litres","ml","number","")+'<button onclick="mzSave()">Save delivery and send SMS</button></div>')
++CARD("Today's deliveries",tbl(["Receipt","Farmer","Centre","Litres","Status","Recorded by"],a.slice().reverse().map(function(d){return [d.ref,Fm(d.fid).name,d.centre,d.l,st(d.s),d.by]}),"No deliveries recorded yet today."))}
+function homeQuality(){var t=today().filter(function(d){return d.s!="Pending"}),pn=D.filter(function(d){return d.s=="Pending"}),ac=sum(t.filter(function(d){return d.s=="Accepted"}),function(d){return d.l}),rj=sum(t.filter(function(d){return d.s=="Rejected"}),function(d){return d.l}),tl=ac+rj;
+return head("Quality Dashboard","Pending tests, results and rejections.","Workspace")
++'<div class="grid">'+K("Pending tests",pn.length,"Waiting in the queue")+K("Accepted today",fmt(ac)+" L","Passed all rules")+K("Rejected today",fmt(rj)+" L","Each has a reason")+K("Acceptance rate",tl?(ac/tl*100).toFixed(1)+"%":"-","Accepted / tested today")+'</div>'
++CARD("Pending test queue",tbl(["Receipt","Farmer","Centre","Litres","Delivered"],pn.map(function(d){return [d.ref,Fm(d.fid).name,d.centre,d.l,d.date]}),"No deliveries waiting for a test.")+'<p><button onclick="go(\'qc\')">Open quality control</button></p>')
++CARD("Recent rejections",tbl(["Receipt","Farmer","Litres","Reason"],D.filter(function(d){return d.s=="Rejected"}).slice(-6).reverse().map(function(d){return [d.ref,Fm(d.fid).name,d.l,d.why]}),"No rejections."))}
+function homeAcc(){return head("Finance Dashboard","Farmer payables, settlements and customer receivables.","Workspace")
++'<div class="grid">'+K("Owed to farmers",KES(liab()),"Unsettled accepted milk")+K("Customer receivables",KES(recv()),"Unpaid invoices")+K("Batches awaiting approval",B.filter(function(b){return b.s=="Draft"}).length,"Manager must approve")+K("Approved, not paid",B.filter(function(b){return b.s=="Approved"}).length,"Ready to release")+'</div>'
++CARD("Settlement batches",tbl(["Batch","Status","Prepared by","Farmers","Net payable"],B.slice().reverse().map(function(b){return [b.id,st(b.s),b.by,b.it.length,KES(sum(b.it,function(x){return x.n}))]}),"No batches yet. Open Settlement Batches to draft one.")+'<p><button onclick="go(\'settle\')">Open settlement batches</button></p>')
++CARD("Outstanding customer invoices",tbl(["Invoice","Customer","Balance"],I.filter(function(i){return invBal(i)>.001}).map(function(i){return [i.no,C.find(function(c){return c.id==i.c}).name,KES(invBal(i))]}),"All invoices are settled."))}
+function homeStore(){var al=[];T.forEach(function(t){var d=DIP[t.id];if(!d)al.push(["Reading pending",t.name,"No physical dip recorded"]);else if(Math.abs(d.v)>.001)al.push(["Discrepancy",t.name,"Physical differs from ledger by "+fmt(d.v)+" L"])});al.push(["Low stock","500 ml pouches","Below reorder level (1,800 of 2,500)"]);
+return head("Store Dashboard","Tank levels, stock movements and discrepancies.","Workspace")
++'<div class="grid">'+K("Recorded milk stock",fmt(stock())+" L","Ledger balance, all tanks")+K("Tanks verified",T.filter(function(t){return DIP[t.id]}).length+" of "+T.length,"By physical dip")+K("Discrepancy alerts",al.length,"Needs attention")+'</div>'
++'<div class="two">'+CARD("Tank levels",T.map(function(t){var d=DIP[t.id];return '<div class="tk"><div class="rl"><b>'+t.name+'</b><span>'+fmt(bal(t.id))+' / '+fmt(t.cap)+' L</span></div><div class="bar"><i style="width:'+Math.min(100,bal(t.id)/t.cap*100)+'%"></i></div><small class="mu">'+(bal(t.id)/t.cap*100).toFixed(1)+'% used'+(d?' · dip '+fmt(d.l)+' L, variance '+fmt(d.v)+' L':'')+'</small><div class="f"><input id="dp'+t.id+'" type="number" step="any" placeholder="Dip reading L"><button class="s" onclick="run(function(){dip(\''+t.id+'\',v(\'dp'+t.id+'\'))})">Record dip</button></div></div>'}).join(""))
++CARD("Discrepancy and stock alerts",tbl(["Type","Item","Detail"],al))+'</div>'
++CARD("Latest stock movements",tbl(["When","Tank","Type","Litres","Reference"],L.slice(-8).reverse().map(function(l){return [l.d,Tk(l.tank).name,l.type,(l.q>0?"+":"")+fmt(l.q),l.ref]})))}
+PG.overview=function(){switch(S.role){case"Collection Clerk":return homeClerk();case"Quality Officer":return homeQuality();case"Accountant":return homeAcc();case"Storekeeper":return homeStore();default:return ov0()}};
+
+/* ---- farmer portal ---- */
+PG.f_home=function(){var f=myF(),a=D.filter(function(d){return d.fid==f.id}),ac=a.filter(function(d){return d.s=="Accepted"}),paid=sum(B.filter(function(b){return b.paid}).flatMap(function(b){return b.it.filter(function(x){return x.fid==f.id})}),function(x){return x.n});
+return head("Welcome, "+f.name.split(" ")[0],"Your milk deliveries, payments and messages from the cooperative.","My Farm Account")
++'<div class="grid">'+K("Accepted milk",fmt(sum(ac,function(d){return d.l}))+" L","All recorded deliveries")+K("Awaiting payment",KES(liab(f.id)),"Accepted, not yet settled")+K("Advance outstanding",KES(f.advance),"Recovered up to 50% per payment")+K("Paid to date",KES(paid),"Net, after deductions")+'</div>'
++CARD("Recent deliveries",tbl(["Receipt","Date","Litres","Status"],a.slice(-6).reverse().map(function(d){return [d.ref,d.date,d.l,st(d.s)+(d.why?' <small class="mu">'+d.why+'</small>':"")]}),"No deliveries yet."))};
+PG.f_del=function(){var f=myF();return head("My Deliveries","Every delivery you have made, with the quality result.","My Farm Account")+CARD("Deliveries",tbl(["Receipt","Date","Centre","Litres","Fat %","Temp","Status"],D.filter(function(d){return d.fid==f.id}).slice().reverse().map(function(d){return [d.ref,d.date,d.centre,d.l,d.fat==null?"-":d.fat,d.temp==null?"-":d.temp,st(d.s)+(d.why?' <small class="mu">'+d.why+'</small>':"")]}),"No deliveries yet."))};
+PG.f_stmt=function(){var f=myF(),pl=P.filter(function(p){return p.fid==f.id}),paid=sum(B.filter(function(b){return b.paid}).flatMap(function(b){return b.it.filter(function(x){return x.fid==f.id})}),function(x){return x.n});
+return head("Payment Statement","Gross value, deductions, amounts paid and what remains.","My Farm Account")
++'<div class="grid">'+K("Gross value",KES(sum(pl,function(p){return p.g})),"Accepted litres x rate")+K("Advance outstanding",KES(f.advance),"Deducted at settlement")+K("Paid (net)",KES(paid),"Released and confirmed")+K("Remaining payable",KES(liab(f.id)),"Not yet settled")+'</div>'
++CARD("Statement lines",tbl(["Delivery","Litres","Rate","Gross","Settlement"],pl.slice().reverse().map(function(p){var b=B.find(function(x){return x.id==p.b});return [p.ref,p.l,KES(R.price),KES(p.g),p.b?p.b+" ("+(b&&b.paid?"Paid":b?b.s:"")+")":"Not yet settled"]}),"No accepted deliveries yet."))};
+PG.f_msg=function(){var f=myF();return head("Notifications","Messages the cooperative has sent to your phone (simulated).","My Farm Account")+CARD("Messages",tbl(["Time","Type","Message"],SM.filter(function(m){return m.to==f.phone}).map(function(m){return [m.t,m.kind,WS(m.msg)]}),"No messages yet. New deliveries and payments will appear here."))};
+
+/* ---- customer portal ---- */
+PG.c_home=function(){var c=myC(),inv=I.filter(function(i){return i.c==c.id}),out=sum(inv,invBal);
+return head("Welcome, "+c.name,"Your orders, invoices and account balance.","My Customer Account")
++'<div class="grid">'+K("Outstanding balance",KES(out),"Unpaid invoices")+K("Credit limit",KES(c.limit),"Approved by the cooperative")+K("Credit available",KES(c.limit-out),"Limit minus balance")+K("Invoices",inv.length,"All time")+'</div>'
++CARD("Recent invoices",tbl(["Invoice","Date","Litres","Amount","Balance"],inv.slice().reverse().map(function(i){return [i.no,i.date,i.l,KES(i.amt),KES(invBal(i))]}),"No invoices yet."))};
+PG.c_cat=function(){return head("Product Catalogue","Products available for order.","My Customer Account")+CARD("Products",tbl(["Product","Pack","Price"],[["Fresh pasteurised milk","Per litre","KES "+R.sale],["Yoghurt","500 ml","KES 120"],["Fermented milk (mala)","500 ml","KES 100"]]))};
+PG.c_ord=function(){var c=myC(),rows=I.filter(function(i){return i.c==c.id}).slice().reverse().map(function(i){return ["SO-"+i.no.slice(4),"Pasteurised milk",i.l+" L",st("Delivered"),i.no,i.date]});rows.push(["SO-311","Pasteurised milk","250 L",st("Pending"),"Not yet invoiced","-"]);
+return head("Orders & Delivery Status","Track each order from request to delivery.","My Customer Account")+CARD("Orders",tbl(["Order","Product","Quantity","Delivery","Invoice","Date"],rows))};
+PG.c_inv=function(){var c=myC(),inv=I.filter(function(i){return i.c==c.id});
+return head("Invoices & Payments","What you were charged and what you have paid.","My Customer Account")
++CARD("Invoices",tbl(["Invoice","Date","Amount","Paid","Balance"],inv.slice().reverse().map(function(i){return [i.no,i.date,KES(i.amt),KES(i.amt-invBal(i)),KES(invBal(i))]}),"No invoices yet."))
++CARD("Payments received",tbl(["Receipt","Date","Invoice","Amount","Method"],PAY.filter(function(p){return inv.some(function(i){return i.no==p.inv})}).slice().reverse().map(function(p){return [p.no,p.date,p.inv,KES(p.amt),p.m]}),"No payments yet."))};
+
+/* ---- navigation and render with role enforcement ---- */
+nav=function(){var q=(S.q||"").toLowerCase(),sc=$("nl").scrollTop,bd={notif:alerts().length,qc:D.filter(function(d){return d.s=="Pending"}).length,settle:B.filter(function(b){return b.s!="Paid"}).length,recv:I.filter(function(i){return invBal(i)>.001}).length};
+$("nl").innerHTML=NAV.map(function(g,i){var it=g[1].filter(function(x){return allowed(x[0])&&x[1].toLowerCase().indexOf(q)>-1});if(!it.length)return"";var c=!q&&(S.col||{})[i];
+return '<button class="gt'+(c?" c":"")+'" aria-expanded="'+(!c)+'" onclick="tg('+i+')"><span>'+g[0]+'</span>'+ic("chev")+'</button>'+(c?"":it.map(function(x){return '<a tabindex="0" class="'+(x[0]==S.route?"on":"")+'" onclick="go(\''+x[0]+'\')" onkeydown="if(event.key==\'Enter\')go(\''+x[0]+'\')">'+ic(IM[x[0]])+'<span class="tx">'+x[1]+'</span>'+(bd[x[0]]?'<span class="nb">'+bd[x[0]]+'</span>':"")+'</a>'}).join(""))}).join("");
+$("nl").scrollTop=sc;$("nf").innerHTML='<span class="dot"></span>'+S.role+'<span class="av" title="'+Un+'">'+ini+'</span>'};
+function vis(){var rb=document.querySelector('.top button[onclick="go(\'milk\')"]'),ab=document.querySelector('.top button[onclick="go(\'notif\')"]'),mr=$("mzReset");
+ if(rb)rb.style.display=allowed("milk")?"":"none";if(ab)ab.style.display=allowed("notif")?"":"none";if(mr)mr.style.display=S.role=="Manager"?"":"none"}
+render=function(){
+ if(!DEMO){var s=Auth.session();if(!s){location.replace("login.html");return}S.role=MAP[s.r];S.force=false;if(!allowed(S.route))S.route=HOME[S.role]}
+ nav();$("bn").textContent=alerts().length;vis();
+ var f=PG[S.route]||PGX[S.route];$("pg").innerHTML=f?f():gen(S.route);
+ if(S.route=="biz")bizc(),document.querySelectorAll("#pg input").forEach(function(e){e.oninput=bizc});
+ if(S.route=="bulk")bprev();
+ if(!DEMO)snap()};
+
+/* guided demo runs freely, then returns to the signed-in role */
+var j0=journey;
+journey=async function(){DEMO=true;try{await j0()}finally{DEMO=false;S.force=false;S.role=MAP[Auth.session().r];S.route=HOME[S.role];render()}};
+
+/* ---- top bar ---- */
+var top=document.querySelector(".top");
+Array.prototype.slice.call(top.querySelectorAll("button")).forEach(function(b){if((b.getAttribute("onclick")||"").indexOf("mz_role")>-1)b.remove()});
+var lab=$("role");lab=lab&&lab.parentElement;if(lab)lab.style.display="none";
+top.insertAdjacentHTML("beforeend",(acct.r.length>1?'<select id="mzRole" aria-label="Switch role" onchange="mzSwitch(this)">'+acct.r.map(function(r){return '<option value="'+r+'"'+(r==ses.r?" selected":"")+'>'+MAP[r]+'</option>'}).join("")+'</select>':"")+'<span class="mu">'+Un+'</span><button class="s" id="mzReset" onclick="mzReset()">Reset demo data</button><button class="s" onclick="Auth.out()">Log out</button>');
+S.col={};S.route=HOME[MAP[ses.r]];render();
+setInterval(function(){if(!DEMO&&!Auth.session(false))location.replace("login.html")},30000);
+})();</script>
+<!--MZ-POST--><script>(function(){
+if(!window.Auth||!Auth.session())return;
+var CEN=["Chuka","Kibugua","Njuri","Nthambo","Kiracha"],TK={Chuka:"TK-01",Kibugua:"TK-02",Njuri:"TK-03",Nthambo:"TK-04",Kiracha:"TK-05"},CLERK="James Rugendo";
+var RL={Manager:"Manager",Clerk:"Collection Clerk",Quality:"Quality Officer",Accountant:"Accountant",Store:"Storekeeper"};
+function me(){var s=Auth.session(false),a=s&&ACC.find(function(x){return x.e==s.e});return a?a.n:""}
+function roleMatch(){var s=Auth.session(false);return !!s&&RL[s.r]===S.role}
+
+/* delivery entry now routes to the right centre tank and records the clerk by name */
+collect=function(fid,l,o){need("collect");l=+l;if(!(l>0))throw Error("Enter litres greater than 0");
+ if(D.some(function(d){return d.fid==fid&&d.l==l&&d.s=="Pending"&&!o}))throw Error("Duplicate submission blocked: same farmer and quantity is already awaiting a test");
+ var f=Fm(fid),by=S.role=="Collection Clerk"?(roleMatch()?me():CLERK):S.role;
+ var d={id:"D"+(++seq),ref:"MC-"+(++seq),fid:fid,l:l,centre:f.centre,tank:TK[f.centre]||"TK-01",date:dt(o||0),s:"Pending",by:by};
+ D.push(d);sms(f.phone,"Dear "+f.name.split(" ")[0]+", we received "+l+" L on "+d.date+" (Ref "+d.ref+"). Quality result to follow.","rcv:"+d.ref,"Delivery");
+ aud("Delivery recorded",d.ref,l+" L from "+f.id+" at "+f.centre);return d};
+
+/* audit trail shows the person's name with their role */
+var u0=A.unshift;A.unshift=function(x){if(x&&x.u===S.role&&roleMatch())x.u=me()+" ("+S.role+")";return u0.call(this,x)};
+
+/* reseed demo data across all five centres (runs once, and again after Reset demo data) */
+var NAMES=["Wanjiru Kinyua","Mwenda Mutwiri","Kagendo Murithi","Njeru Gitonga","Gacheri Muthomi","Kiambi Ntarangwi","Muthoni Mugambi","Karimi Mwiti","Mutuma Kirimi","Nkirote Rimberia","Kinoti Mbaabu","Makena Mugo"];
+function reseed(){var keep=S.role;S.force=true;S.role="Manager";
+ [F,D,L,P,B,SM,I,PAY,A,PB,XF].forEach(function(x){x.length=0});Object.keys(DIP).forEach(function(k){delete DIP[k]});seq=1000;
+ NAMES.forEach(function(n,i){register(n,"0712 000 "+(100+i),CEN[i%5])});
+ F.forEach(function(f,i){if(i%4==0)f.advance=1500});
+ T.forEach(function(t){post(t.id,"Opening",400,"OPEN","Approved opening stock")});
+ for(var o=-2;o<=0;o++)F.forEach(function(f,i){var d=collect(f.id,20+(i*7+(o+3)*13)%60,o);qtest(d.id,(i*3+o)%11==0?2.8:3.4+((i+o+5)%6)/10,4+(i%3),"Negative")});
+ sell("C1","TK-01",200);payI(I[0].no,5000,"M-Pesa (simulated)");
+ D.forEach(function(d){d.by=CLERK});
+ SM.length=0;A.length=0;A.unshift({t:dt()+" "+tm(),u:"System",a:"Demo data loaded",r:"System",x:"Fictional records, 5 centres"});
+ S.force=false;S.role=keep}
+if(!F.some(function(f){return ["Njuri","Nthambo","Kiracha"].indexOf(f.centre)>-1}))reseed();
+
+/* pages that listed only two centres */
+var fa0=PG.farmers;PG.farmers=function(){return fa0().replace('<option>Chuka</option><option>Kibugua</option>',CEN.map(function(c){return '<option>'+c+'</option>'}).join(""))};
+var bk0=PG.bulk;PG.bulk=function(){return bk0().replace('<option>Chuka farmers</option><option>Kibugua farmers</option>',CEN.map(function(c){return '<option>'+c+' farmers</option>'}).join(""))};
+PG.reports=function(){var rows=CEN.map(function(c){var x=D.filter(function(d){return d.centre==c});return [c,fmt(sum(x,function(d){return d.l})),fmt(sum(x.filter(function(d){return d.s=="Accepted"}),function(d){return d.l})),fmt(sum(x.filter(function(d){return d.s=="Rejected"}),function(d){return d.l}))]});
+ return head("Reports","Totals by centre. Each figure sums the delivery records.","Workspace")+'<div class="card"><h3>Collection by centre (litres)</h3>'+tbl(["Centre","Received","Accepted","Rejected"],rows)+'</div><div class="card"><h3>Top suppliers by accepted litres</h3>'+tbl(["Farmer","Accepted L","Value"],F.map(function(f){return [f.name,sum(acc().filter(function(d){return d.fid==f.id}),function(d){return d.l})]}).sort(function(a,b){return b[1]-a[1]}).slice(0,6).map(function(r){return [r[0],fmt(r[1]),KES(r[1]*R.price)]}))+'</div>'};
+var VEH=["KDA 214X","KCB 880T","KDD 301M","KDE 112P","KDF 905R"],DRV=["J. Mwenda","P. Kiogora","M. Kendi","S. Muriithi","D. Karani"];
+var accL=function(c){return sum(D.filter(function(d){return d.centre==c&&d.s=="Accepted"}),function(d){return d.l})};
+GEN.routes[3]=function(){return CEN.map(function(c,i){return ["Route "+(i+1),c,F.filter(function(f){return f.centre==c}).length,["05:30","06:00","06:30","07:00","07:30"][i]+" daily"]})};
+GEN.veh[3]=function(){return CEN.map(function(c,i){return [VEH[i],DRV[i],c+" to plant",fmt(accL(c)),st("Delivered")]})};
+GEN.trans[3]=function(){return CEN.map(function(c,i){return [c+" to plant",VEH[i],fmt(accL(c)),"None"]})};
+
+/* ---- editable calendar ---- */
+var CALK="mz_cal",TYPES=["Meeting","Training","Collection","Maintenance","Payment","Other"];
+function iso(y,m,d){return y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0")}
+function off(n){var d=new Date();d.setDate(d.getDate()+n);return iso(d.getFullYear(),d.getMonth(),d.getDate())}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+var EV=null;try{EV=JSON.parse(localStorage.getItem(CALK))}catch(e){}
+if(!Array.isArray(EV)){EV=[
+{id:1,d:off(0),t:"08:00",title:"Weekly collection review",type:"Meeting",by:"Timothy Mwangi",notes:"All five centres"},
+{id:2,d:off(2),t:"10:00",title:"Farmer settlement run",type:"Payment",by:"James Mwenda",notes:"Draft, approve, release"},
+{id:3,d:off(5),t:"09:00",title:"Mastitis control training",type:"Training",by:"Timothy Mwangi",notes:"Njuri centre"},
+{id:4,d:off(7),t:"14:00",title:"Chiller service, Chuka",type:"Maintenance",by:"Lucy Kendi",notes:""},
+{id:5,d:off(10),t:"10:00",title:"Scale calibration, Kiracha",type:"Maintenance",by:"Lucy Kendi",notes:""}];saveCal()}
+function saveCal(){try{localStorage.setItem(CALK,JSON.stringify(EV))}catch(e){}}
+var now=new Date(),CS={y:now.getFullYear(),m:now.getMonth(),sel:off(0),edit:null};
+function canEdit(e){return S.role=="Manager"||e.by==me()}
+var cs=document.createElement("style");
+cs.textContent=".cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:6px}.cal .h{font-size:12px;color:var(--mu);text-align:center;padding:4px 0}.cal .d{min-height:92px;border:1px solid var(--bd);border-radius:8px;padding:4px;background:var(--card);cursor:pointer;overflow:hidden}.cal .d.o{background:transparent;border-style:dashed;cursor:default;opacity:.4}.cal .d.t{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac)}.cal .d.s{background:var(--soft)}.cal .n{font-size:12px;font-weight:600}.cal .e{display:block;width:100%;text-align:left;margin-top:2px;padding:1px 5px;font-size:11px;border-radius:4px;border:0;background:var(--soft);color:var(--ac);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.cal .e.Payment{background:var(--wb);color:var(--wa)}.cal .e.Maintenance{background:var(--eb);color:var(--er)}.cal .m{font-size:11px;color:var(--mu)}@media(max-width:820px){.cal .d{min-height:60px}.cal .e{font-size:10px}}";
+document.head.appendChild(cs);
+function chip(e){return '<button class="e '+e.type+'" onclick="event.stopPropagation();calEdit('+e.id+')" title="'+esc((e.t||"")+" "+e.title)+'">'+esc((e.t?e.t+" ":"")+e.title)+'</button>'}
+function nice(d){return new Date(d+"T00:00:00").toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"})}
+PG.cal=function(){
+ var y=CS.y,m=CS.m,start=(new Date(y,m,1).getDay()+6)%7,dim=new Date(y,m+1,0).getDate(),n2=Math.ceil((start+dim)/7)*7,td=off(0),cells="";
+ ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].forEach(function(w){cells+='<div class="h">'+w+'</div>'});
+ for(var i=0;i<n2;i++){var n=i-start+1;
+  if(n<1||n>dim){cells+='<div class="d o"></div>';continue}
+  var k=iso(y,m,n),ev=EV.filter(function(e){return e.d==k}).sort(function(a,b){return (a.t||"").localeCompare(b.t||"")});
+  cells+='<div class="d'+(k==td?" t":"")+(k==CS.sel?" s":"")+'" onclick="calPick(\''+k+'\')"><span class="n">'+n+'</span>'+ev.slice(0,3).map(chip).join("")+(ev.length>3?'<span class="m">+'+(ev.length-3)+' more</span>':"")+'</div>'}
+ var e=CS.edit?EV.find(function(x){return x.id==CS.edit}):null,ro=!!e&&!canEdit(e),dis=ro?" disabled":"",
+  val=e||{d:CS.sel,t:"09:00",title:"",type:"Meeting",notes:""};
+ var form='<div class="f"><label>Date<input id="cd" type="date" value="'+esc(val.d)+'"'+dis+'></label><label>Time<input id="ct" type="time" value="'+esc(val.t)+'"'+dis+'></label><label>Title<input id="cti" value="'+esc(val.title)+'" style="min-width:220px"'+dis+'></label><label>Type<select id="cty"'+dis+'>'+TYPES.map(function(t){return '<option'+(t==val.type?" selected":"")+'>'+t+'</option>'}).join("")+'</select></label><label>Notes<input id="cn" value="'+esc(val.notes)+'" style="min-width:200px"'+dis+'></label></div><p>'
+  +(ro?'<span class="mu">View only. Only the Manager or '+esc(e.by)+' can change this event.</span> ':'<button onclick="calSave()">'+(e?"Save changes":"Add event")+'</button> ')
+  +(e&&!ro?'<button class="s" onclick="calDel()">Delete</button> ':"")+(e?'<button class="s" onclick="calNew()">New event</button>':"")+(e?' <span class="mu">Created by '+esc(e.by)+'</span>':"")+'</p>';
+ var up=EV.filter(function(x){return x.d>=td}).sort(function(a,b){return (a.d+(a.t||"")).localeCompare(b.d+(b.t||""))}).slice(0,10);
+ return head("Calendar","Meetings, training, collection days, maintenance and payment runs. Click a day to add an event, or an event to edit it.","Workspace")
+ +'<div class="card"><div class="f" style="align-items:center;margin-bottom:10px"><button class="s" onclick="calNav(-1)">Previous</button><button class="s" onclick="calToday()">Today</button><button class="s" onclick="calNav(1)">Next</button><h3 style="margin:0 0 0 8px">'+new Date(y,m,1).toLocaleDateString("en-GB",{month:"long",year:"numeric"})+'</h3></div><div class="cal">'+cells+'</div></div>'
+ +'<div class="card" id="calf"><h3>'+(e?"Edit event":"Add event")+'</h3>'+form+'</div>'
+ +'<div class="card"><h3>Upcoming</h3>'+tbl(["Date","Time","Event","Type","Created by",""],up.map(function(x){return [nice(x.d),x.t||"-",esc(x.title),x.type,esc(x.by),'<button class="s" onclick="calEdit('+x.id+')">'+(canEdit(x)?"Edit":"View")+'</button>']}),"No upcoming events.")+'</div>'};
+window.calNav=function(n){CS.m+=n;if(CS.m<0){CS.m=11;CS.y--}if(CS.m>11){CS.m=0;CS.y++}render()};
+window.calToday=function(){var d=new Date();CS.y=d.getFullYear();CS.m=d.getMonth();CS.sel=off(0);CS.edit=null;render()};
+window.calPick=function(d){CS.sel=d;CS.edit=null;render()};
+window.calNew=function(){CS.edit=null;render()};
+window.calEdit=function(id){var e=EV.find(function(x){return x.id==id});if(!e)return;CS.edit=id;CS.sel=e.d;render();setTimeout(function(){var el=document.getElementById("calf");if(el)el.scrollIntoView({behavior:"smooth"})},0)};
+window.calSave=function(){run(function(){
+ var d=v("cd"),t=v("ct"),ti=v("cti").trim();if(!d)throw Error("Choose a date");if(!ti)throw Error("Enter a title");
+ if(CS.edit){var e=EV.find(function(x){return x.id==CS.edit});if(!e)throw Error("Event not found");if(!canEdit(e))throw Error("Only the Manager or the creator can change this event");
+  e.d=d;e.t=t;e.title=ti;e.type=v("cty");e.notes=v("cn");aud("Calendar event updated",ti,d);toast("Event updated")}
+ else{EV.push({id:Date.now(),d:d,t:t,title:ti,type:v("cty"),by:me(),notes:v("cn")});aud("Calendar event added",ti,d);toast("Event added")}
+ CS.edit=null;CS.sel=d;var p=d.split("-");CS.y=+p[0];CS.m=p[1]-1;saveCal()})};
+window.calDel=function(){run(function(){var e=EV.find(function(x){return x.id==CS.edit});if(!e)return;if(!canEdit(e))throw Error("Only the Manager or the creator can delete this event");
+ if(!confirm("Delete this event?"))return;EV.splice(EV.indexOf(e),1);aud("Calendar event deleted",e.title,e.d);CS.edit=null;saveCal();toast("Event deleted")})};
+if(!NAV[0][1].some(function(i){return i[0]=="cal"}))NAV[0][1].splice(2,0,["cal","Calendar"]);
+IM.cal="calendar";
+render();
+})();</script>
+<!--MZ-M2M--><script>(function(){
+if(!window.Auth||!Auth.session()||typeof PG==="undefined")return;
+var ALLR=["Manager","Collection Clerk","Quality Officer","Accountant","Storekeeper"];
+var ACL={m2m_ov:ALLR,m2m_del:ALLR,m2m_det:ALLR,m2m_qa:["Manager","Quality Officer","Collection Clerk","Accountant"],m2m_stock:["Manager","Storekeeper","Quality Officer","Accountant"],m2m_rec:["Manager","Storekeeper","Accountant"],m2m_pay:["Manager","Accountant"],m2m_apr:["Manager","Accountant"],m2m_stm:["Manager","Accountant","Collection Clerk"],m2m_aud:["Manager","Accountant"]};
+window.m2mOK=function(r,role){return (ACL[r]||[]).indexOf(role)>-1};
+var LIM={min:1,max:500},PAGE=10,CAP=0.5;
+var CEN=["Chuka","Kibugua","Njuri","Nthambo","Kiracha"],TKM={Chuka:"TK-01",Kibugua:"TK-02",Njuri:"TK-03",Nthambo:"TK-04",Kiracha:"TK-05"};
+var M={flt:{},pgn:{},used:{},rc:{},fm:{},prev:null,tok:null,sel:null,from:null,to:null,cen:"All centres",pc:{},stm:{},ctx:null,tk:null};
+try{var s0=JSON.parse(localStorage.getItem("mz_m2m"));if(s0&&s0.rc)M.rc=s0.rc}catch(e){}
+
+/* ---------- helpers ---------- */
+function me(){var s=Auth.session(false),a=s&&ACC.find(x=>x.e==s.e);return a?a.n:S.role}
+var E=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+var cc=n=>Math.round(n*100);
+var sc=(a,f)=>a.reduce((s,x)=>s+cc(f(x)),0);
+var pad=n=>String(n).padStart(2,"0");
+function isoD(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+function todayI(){return isoD(new Date())}
+function offI(n){var d=new Date();d.setDate(d.getDate()+n);return isoD(d)}
+function dIso(d){if(d.iso)return d.iso;var m=String(d.date).match(/(\d+)\s+([A-Za-z]+)/);if(!m)return todayI();var mi=["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"].indexOf(m[2].slice(0,3).toLowerCase());if(mi<0)return todayI();var x=new Date(new Date().getFullYear(),mi,+m[1]);if(x>new Date(Date.now()+864e5))x.setFullYear(x.getFullYear()-1);return isoD(x)}
+function routeOf(c){return "Route "+(CEN.indexOf(c)+1)}
+function card(t,h){return `<div class="card"><h3>${t}</h3>${h}</div>`}
+function kp(l,b,f,go){return `<div class="k"${go?` style="cursor:pointer" tabindex="0" role="link" onclick="${go}" onkeydown="if(event.key==='Enter'){${go}}"`:""}><span>${l}</span><b>${b}</b><small>${f||""}</small></div>`}
+var WFS=["Awaiting quality assessment","Quality rejected","Awaiting stock posting","Payable calculated","Awaiting payment approval","Payment pending","Payment failed","Paid (simulated)","Reversed"];
+var wb=s=>`<span class="b ${/^Paid/.test(s)?"g":/rejected|failed|Reversed|Fail/.test(s)?"r":"a"}">${s}</span>`;
+var DM='<div class="dm"><b>DEMO DATA</b> Records are fictional. SMS and M-Pesa are simulated, so no message is sent and no money moves. Roles and checks run in the browser only.</div>';
+var GRP="Milk-to-Money Workflow";
+
+/* ---------- navigation ---------- */
+if(!NAV.some(g=>g[0]==GRP))NAV.push([GRP,[["m2m_ov","Workflow Overview"],["m2m_del","Delivery Register"],["m2m_qa","Quality & Acceptance"],["m2m_stock","Stock Traceability"],["m2m_rec","Reconciliation"],["m2m_pay","Payment Calculations"],["m2m_apr","Approvals & Settlements"],["m2m_stm","Farmer Statements"],["m2m_aud","Audit & Exceptions"]]]);
+Object.assign(IM,{m2m_ov:"grid",m2m_del:"list",m2m_qa:"check",m2m_stock:"tank",m2m_rec:"balance",m2m_pay:"calc",m2m_apr:"shield",m2m_stm:"doc",m2m_aud:"eye"});
+
+/* ---------- data links (extends existing records, creates no parallel ones) ---------- */
+function norm(){F.forEach(f=>{if(!f.area)f.area=f.centre;if(!f.mem)f.mem="MBR-"+String(f.id).replace(/\D/g,"").padStart(4,"0")});
+ D.forEach(d=>{var f=Fm(d.fid)||{};if(!d.iso)d.iso=dIso(d);if(!d.shift)d.shift="Not recorded";if(!d.cc)d.cc=d.centre+" Collection Centre";if(!d.branch)d.branch=d.centre+" Branch";if(!d.area)d.area=f.area||d.centre;if(!d.route)d.route=routeOf(d.centre)})}
+function enrich(d,o){var f=Fm(d.fid),c=M.ctx||{},cen=c.cen||f.centre;d.centre=cen;d.tank=TKM[cen]||d.tank;d.iso=c.iso||offI(o||0);d.t=tm();d.shift=c.shift||(new Date().getHours()<12?"Morning":"Evening");d.branch=cen+" Branch";d.cc=cen+" Collection Centre";d.route=routeOf(cen);d.area=f.area||f.centre;d.key=[d.fid,cen,d.iso,d.shift,d.l].join("|")}
+var c0=collect;collect=function(fid,l,o){var d=c0(fid,l,o);norm();enrich(d,o||0);return d};
+var mb0=mkBatch;mkBatch=function(){mb0();var b=B[B.length-1];if(b&&!b.byName)b.byName=me()};
+
+function recL(d){return L.find(l=>l.type=="Receipt"&&l.ref==d.ref)}
+function pOf(d){return P.find(p=>p.ref==d.ref)}
+function bOf(p){return p&&p.b&&p.b!="REVERSED"?(B.find(b=>b.id==p.b)||null):null}
+function dOf(p){return D.find(x=>x.ref==p.ref)}
+function lastRc(t){var a=M.rc[t]||[];return a[a.length-1]}
+function wf(d){
+ if(d.s=="Pending")return WFS[0];if(d.s=="Rejected")return WFS[1];if(d.s=="Reversed")return WFS[8];
+ if(!recL(d))return WFS[2];var b=bOf(pOf(d));if(!b)return WFS[3];
+ if(b.paid)return WFS[7];if(b.pay=="Failed")return WFS[6];if(b.s=="Approved")return WFS[5];return WFS[4]}
+function inR(d){var i=dIso(d);return i>=M.from&&i<=M.to&&(M.cen=="All centres"||d.centre==M.cen)}
+var bNet=b=>sc(b.it,x=>x.n)/100;
+
+/* ---------- paging and filters ---------- */
+function pager(k,t){var n=Math.max(1,Math.ceil(t/PAGE)),p=Math.min(Math.max(M.pgn[k]||1,1),n);M.pgn[k]=p;return {p:p,n:n,s:(p-1)*PAGE,e:p*PAGE}}
+function pgBar(k,g,t){return `<div class="f" style="margin-top:8px;align-items:center"><button class="s"${g.p<2?" disabled":""} onclick="m2mP('${k}',-1)">Previous</button><span class="mu">Page ${g.p} of ${g.n} (${t} records)</span><button class="s"${g.p>=g.n?" disabled":""} onclick="m2mP('${k}',1)">Next</button></div>`}
+window.m2mP=(k,n)=>{M.pgn[k]=(M.pgn[k]||1)+n;render()};
+window.m2mF=(k,f,x)=>{(M.flt[k]=M.flt[k]||{})[f]=x;M.pgn[k]=1;render()};
+window.m2mClr=k=>{M.flt[k]={};M.pgn[k]=1;render()};
+function fbar(k,defs){var cur=M.flt[k]||{};return '<div class="f">'+defs.map(d=>{var val=cur[d[0]]||"";
+ if(d[2]=="sel")return `<label>${d[1]}<select onchange="m2mF('${k}','${d[0]}',this.value)">${d[3].map(o=>`<option${(o==val||(!val&&o==d[3][0]))?" selected":""}>${E(o)}</option>`).join("")}</select></label>`;
+ return `<label>${d[1]}<input type="${d[2]||"text"}" value="${E(val)}" onchange="m2mF('${k}','${d[0]}',this.value)"></label>`}).join("")+`<button class="s" onclick="m2mClr('${k}')">Clear</button></div>`}
+window.m2mTo=(route,key,flt)=>{M.flt[key]=Object.assign({from:M.from,to:M.to,cen:M.cen},flt||{});M.pgn[key]=1;go(route)};
+window.m2mOpen=ref=>{M.sel=ref;go("m2m_det")};
+window.m2mOv=(k,val)=>{M[k]=val;render()};
+
+/* ---------- exceptions ---------- */
+function exc(){var X=[],td=todayI();
+ D.forEach(d=>{var i=dIso(d);
+  if(d.s=="Pending"&&i<td)X.push(["Medium","Overdue quality test",d.ref,`Delivered ${d.date}, still untested`,"m2m_qa"]);
+  if(d.s=="Accepted"&&!recL(d))X.push(["High","Accepted milk not posted to stock",d.ref,"No ledger receipt found","m2m_stock"]);
+  if(d.s=="Accepted"&&!pOf(d))X.push(["High","Accepted milk has no payable",d.ref,"No payable record found","m2m_pay"]);
+  if(d.l>LIM.max||d.l<LIM.min)X.push(["Medium","Quantity outside configured limits",d.ref,`${d.l} L, limits ${LIM.min} to ${LIM.max} L`,"m2m_del"])});
+ var cnt={};L.filter(l=>l.type=="Receipt").forEach(l=>cnt[l.ref]=(cnt[l.ref]||0)+1);
+ Object.keys(cnt).filter(k=>cnt[k]>1).forEach(k=>X.push(["High","Duplicate stock posting",k,"Posted more than once","m2m_stock"]));
+ var pc={};P.forEach(p=>pc[p.ref]=(pc[p.ref]||0)+1);Object.keys(pc).filter(k=>pc[k]>1).forEach(k=>X.push(["High","Duplicate payable",k,"Accrued more than once","m2m_pay"]));
+ T.forEach(t=>{var e=lastRc(t.id);
+  if(bal(t.id)<0)X.push(["High","Negative tank balance",t.name,fmt(bal(t.id))+" L","m2m_stock"]);
+  if(!e)X.push(["Low","Physical reading pending",t.name,"Ledger balance is not yet verified","m2m_rec"]);
+  else if(e.st=="Pending review"||e.st=="Under investigation")X.push([e.v?"High":"Medium","Unreviewed reading",t.name,`Variance ${fmt(e.v)} L, ${e.st}`,"m2m_rec"]);
+  var a=sc(D.filter(d=>d.s=="Accepted"&&d.tank==t.id),d=>d.l),r=sc(L.filter(l=>l.tank==t.id&&(l.type=="Receipt"||l.type=="Reversal")),l=>l.q);
+  if(a!==r)X.push(["High","Receipts differ from accepted deliveries",t.name,`Accepted ${fmt(a/100)} L, ledger receipts ${fmt(r/100)} L`,"m2m_stock"])});
+ B.forEach(b=>{if(b.pay=="Failed"&&!b.paid)X.push(["High","Payment failed (simulated)",b.id,"No farmer was marked paid","m2m_apr"]);else if(b.s=="Approved"&&!b.paid)X.push(["Medium","Approved, payment not released",b.id,KES(bNet(b)),"m2m_apr"])});
+ return X}
+
+/* ---------- Workflow Overview ---------- */
+PG.m2m_ov=function(){
+ M.from=M.from||offI(-6);M.to=M.to||todayI();
+ var ds=D.filter(inR),lit=a=>a.reduce((s,d)=>s+d.l,0),by=s=>ds.filter(d=>d.s==s);
+ var ac=by("Accepted"),rj=by("Rejected"),pn=by("Pending"),tl=lit(ac)+lit(rj);
+ var nopost=ds.filter(d=>d.s=="Accepted"&&!recL(d));
+ var tks=T.filter(t=>M.cen=="All centres"||t.centre==M.cen);
+ var rp=tks.filter(t=>{var e=lastRc(t.id);return !e||e.st=="Pending review"||e.st=="Under investigation"});
+ var ps=P.filter(p=>p.b!="REVERSED").map(p=>({p:p,d:dOf(p)})).filter(x=>x.d&&inR(x.d));
+ var un=ps.filter(x=>!x.p.b),dr=ps.filter(x=>{var b=bOf(x.p);return b&&b.s=="Draft"});
+ var bs=s=>B.filter(b=>s(b));
+ var paid=bs(b=>b.paid),appr=bs(b=>b.s=="Approved"&&!b.paid),draft=bs(b=>b.s=="Draft"),failed=bs(b=>b.pay=="Failed"&&!b.paid);
+ var tot=a=>a.reduce((s,b)=>s+cc(bNet(b)),0)/100,ex=exc();
+ var ctl=`<div class="card"><div class="f"><label>From<input type="date" value="${M.from}" onchange="m2mOv('from',this.value)"></label><label>To<input type="date" value="${M.to}" onchange="m2mOv('to',this.value)"></label><label>Centre<select onchange="m2mOv('cen',this.value)">${["All centres"].concat(CEN).map(c=>`<option${c==M.cen?" selected":""}>${c}</option>`).join("")}</select></label></div><small class="mu">Every figure is calculated from delivery, ledger, payable and batch records for this period and centre, using the delivery date. Click a figure to open its register.</small></div>`;
+ var stg=WFS.map(s=>{var a=ds.filter(d=>wf(d)==s);return [`<a href="#" onclick="m2mTo('m2m_del','del',{st:'${s}'});return false">${wb(s)}</a>`,a.length,fmt(lit(a))+" L"]});
+ return head("Workflow Overview","Delivery, quality, stock, payable and settlement in one view.",GRP)+DM+ctl
+ +`<div class="grid">${kp("Deliveries recorded",ds.length,"In the period","m2mTo('m2m_del','del',{})")}${kp("Litres delivered",fmt(lit(ds))+" L","All statuses")}${kp("Litres accepted",fmt(lit(ac))+" L","Passed every test","m2mTo('m2m_del','del',{st:'Payable calculated'})")}${kp("Litres rejected",fmt(lit(rj))+" L","Each has a reason","m2mTo('m2m_del','del',{st:'Quality rejected'})")}${kp("Quality acceptance rate",tl?(lit(ac)/tl*100).toFixed(1)+"%":"-","Accepted / (accepted + rejected)","go('m2m_qa')")}</div>`
+ +`<div class="grid">${kp("Awaiting testing",pn.length,fmt(lit(pn))+" L, not in stock or payables","m2mTo('m2m_del','del',{st:'Awaiting quality assessment'})")}${kp("Awaiting stock posting",nopost.length,"Accepted, no ledger receipt","m2mTo('m2m_del','del',{st:'Awaiting stock posting'})")}${kp("Pending physical reconciliation",rp.length+" of "+tks.length,"Tanks with no reading or an open review","go('m2m_rec')")}</div>`
+ +`<div class="grid">${kp("Payables awaiting a batch",KES(sc(un,x=>x.p.g)/100),un.length+" deliveries, calculated only","m2mTo('m2m_del','del',{st:'Payable calculated'})")}${kp("Awaiting payment approval",KES(sc(dr,x=>x.p.g)/100),dr.length+" deliveries in draft batches","go('m2m_apr')")}${kp("Approved, payment pending",KES(tot(appr)),appr.length+" batches, net, all periods","go('m2m_apr')")}${kp("Paid (simulated)",KES(tot(paid)),paid.length+" batches, net, all periods","go('m2m_apr')")}${kp("Failed payments",failed.length,"Nobody is marked paid","go('m2m_apr')")}${kp("Exceptions",ex.length,"Need action","go('m2m_aud')")}</div>`
+ +card("Where deliveries are in the workflow",tbl(["Status","Deliveries","Litres"],stg))};
+
+/* ---------- Delivery Register ---------- */
+function delList(){var f=M.flt.del||{},q=(f.q||"").toLowerCase();
+ return D.filter(d=>{var fa=Fm(d.fid)||{};
+  if(q&&!(d.ref.toLowerCase().includes(q)||String(fa.name||"").toLowerCase().includes(q)||String(fa.mem||"").toLowerCase().includes(q)||String(d.fid).toLowerCase().includes(q)))return false;
+  if(f.st&&f.st!=="All statuses"&&wf(d)!==f.st)return false;
+  if(f.cen&&f.cen!=="All centres"&&d.centre!==f.cen)return false;
+  var i=dIso(d);if(f.from&&i<f.from)return false;if(f.to&&i>f.to)return false;return true}).reverse()}
+function chkDel(p){var f=Fm(p.fid);if(!f)throw Error("Select a registered farmer");if(CEN.indexOf(p.cen)<0)throw Error("Select a valid collection centre");if(!p.iso)throw Error("Choose the delivery date");if(p.iso>todayI())throw Error("The delivery date cannot be in the future");if(p.iso<offI(-3))throw Error("Deliveries older than 3 days need Manager review and cannot be entered here");if(["Morning","Evening","Other"].indexOf(p.shift)<0)throw Error("Choose a collection shift");if(!(p.l>=LIM.min&&p.l<=LIM.max))throw Error(`Quantity must be between ${LIM.min} and ${LIM.max} litres`);
+ var key=[p.fid,p.cen,p.iso,p.shift,p.l].join("|"),dup=D.find(d=>d.key==key&&d.s!="Reversed");if(dup)throw Error(`Possible duplicate: ${dup.ref} already records the same farmer, centre, date, shift and quantity`)}
+window.m2mFarm=id=>{var f=Fm(id);M.fm={fid:id,cen:f.centre,iso:v("m_d"),shift:v("m_s"),l:v("m_l")};M.prev=null;render()};
+window.m2mEdit=()=>{M.prev=null;render()};
+window.m2mPrev=()=>run(()=>{need("collect");var p={fid:v("m_f"),cen:v("m_c"),iso:v("m_d"),shift:v("m_s"),l:+v("m_l"),area:(document.getElementById("m_a")||{}).value||""};M.fm=p;chkDel(p);p.o=Math.round((new Date(p.iso)-new Date(todayI()))/864e5);M.prev=p;M.tok=Date.now()+"-"+Math.random().toString(36).slice(2)});
+window.m2mSave=()=>run(()=>{need("collect");var p=M.prev;if(!p)throw Error("Preview the delivery first");if(M.used[M.tok])throw Error("This delivery was already saved");
+ chkDel(p);M.used[M.tok]=1;var f=Fm(p.fid),d;
+ try{if(p.area&&p.area!=f.area&&CEN.indexOf(p.area)>-1){need("approve");aud("Farmer area updated",f.id,`${f.area} to ${p.area}`);f.area=p.area}
+  M.ctx=p;d=collect(p.fid,p.l,p.o)}catch(e){delete M.used[M.tok];throw e}finally{M.ctx=null}
+ M.prev=null;M.fm={fid:p.fid};toast(`Saved ${d.ref}. Farmer SMS queued (simulated)`)});
+function formDel(){var fm=M.fm=M.fm||{},f=Fm(fm.fid)||F[0];fm.fid=f.id;var cen=fm.cen||f.centre,iso=fm.iso||todayI();
+ var o=`<div class="f"><label>Farmer / membership<select id="m_f" onchange="m2mFarm(this.value)">${F.map(x=>`<option value="${x.id}"${x.id==f.id?" selected":""}>${E(x.mem+" | "+x.name)}</option>`).join("")}</select></label>
+ <label>Farmer's registered area<input value="${E(f.area)}" disabled></label>
+ ${S.role=="Manager"?`<label>Update registered area<select id="m_a">${CEN.map(c=>`<option${c==f.area?" selected":""}>${c}</option>`).join("")}</select></label>`:""}
+ <label>Collection centre<select id="m_c">${CEN.map(c=>`<option${c==cen?" selected":""}>${c}</option>`).join("")}</select></label>
+ <label>Delivery date<input id="m_d" type="date" min="${offI(-3)}" max="${todayI()}" value="${iso}"></label>
+ <label>Shift<select id="m_s">${["Morning","Evening","Other"].map(s=>`<option${s==fm.shift?" selected":""}>${s}</option>`).join("")}</select></label>
+ <label>Quantity (litres)<input id="m_l" type="number" step="any" min="${LIM.min}" max="${LIM.max}" value="${E(fm.l||"")}"></label>
+ <label>Recorded by<input value="${E(me())}" disabled></label><button onclick="m2mPrev()">Preview</button></div>
+ <small class="mu">The farmer's area and the delivery centre are stored separately. Each delivery keeps its own centre, branch, route and area snapshot, so later changes to the farmer do not rewrite history. Limits: ${LIM.min} to ${LIM.max} L per delivery.</small>`;
+ var p=M.prev,pv="";
+ if(p){var pf=Fm(p.fid);pv=`<div class="note"><b>PROPOSED MILK DELIVERY</b><br>Farmer/membership: ${E(pf.mem)} | ${E(pf.name)}<br>Branch: ${E(p.cen)} Branch<br>Collection centre: ${E(p.cen)} Collection Centre<br>Farmer area: ${E(p.area||pf.area)}<br>Date: ${p.iso}<br>Shift: ${E(p.shift)}<br>Quantity: ${p.l} L<br>Recorded by: ${E(me())}<br><b>NOTE: Preview only. No delivery has been saved.</b><p><button onclick="m2mSave()">Confirm and save delivery</button> <button class="s" onclick="m2mEdit()">Edit</button></p></div>`}
+ return card("Record milk delivery",o+pv)}
+PG.m2m_del=function(){
+ var list=delList(),g=pager("del",list.length),can=CAN.collect.includes(S.role);
+ var rows=list.slice(g.s,g.e).map(d=>{var f=Fm(d.fid)||{};return [`<a href="#" onclick="m2mOpen('${d.ref}');return false">${d.ref}</a>`,`${E(d.date)}${d.t?" "+d.t:""}<br><small class="mu">${E(d.shift)}</small>`,`${E(f.name)}<br><small class="mu">${E(f.mem)}</small>`,E(d.centre),d.l,d.s=="Accepted"?d.l:d.s=="Pending"?"-":0,d.s=="Rejected"?d.l:d.s=="Pending"?"-":0,wb(wf(d)),E(d.by||"-")]});
+ return head("Delivery Register","Every delivery with its farmer, centre, quality result and workflow status.",GRP)+DM+(can?formDel():"")
+ +card("Deliveries",fbar("del",[["q","Search","text"],["st","Status","sel",["All statuses"].concat(WFS)],["cen","Centre","sel",["All centres"].concat(CEN)],["from","From","date"],["to","To","date"]])+tbl(["Ref","Date / shift","Farmer","Centre","Delivered L","Accepted L","Rejected L","Workflow status","Recorded by"],rows,"No deliveries match these filters.")+pgBar("del",g,list.length))};
+
+/* ---------- Delivery detail, correction, reversal ---------- */
+window.m2mCorrect=ref=>run(()=>{need("collect");var d=D.find(x=>x.ref==ref);if(!d)throw Error("Delivery not found");if(d.s!="Pending")throw Error("Only deliveries awaiting a test can be corrected. For posted milk use a reversal.");
+ var n=+v("dc_l"),r=v("dc_r").trim();if(!(n>=LIM.min&&n<=LIM.max))throw Error(`Quantity must be between ${LIM.min} and ${LIM.max} L`);if(n==d.l)throw Error("The quantity is unchanged");if(r.length<5)throw Error("Enter a reason (at least 5 characters)");
+ var old=d.l;d.l=n;d.key=[d.fid,d.centre,d.iso,d.shift,n].join("|");d.h=d.h||[];d.h.push({t:dt()+" "+tm(),by:me(),from:old,to:n,why:r});
+ aud("Delivery corrected",ref,`${old} L to ${n} L. Reason: ${r}`);sms(Fm(d.fid).phone,`Correction: ${ref} is now ${n} L (was ${old} L).`,"corr:"+ref+":"+n,"Delivery");toast("Correction recorded with history")});
+window.m2mReverse=ref=>run(()=>{need("approve");var d=D.find(x=>x.ref==ref);if(!d||d.s!="Accepted")throw Error("Only accepted deliveries can be reversed");
+ var p=pOf(d);if(p&&p.b&&p.b!="REVERSED")throw Error("This delivery is in settlement batch "+p.b+". It cannot be reversed from here.");
+ var r=v("dr_r").trim();if(r.length<5)throw Error("Enter a reason (at least 5 characters)");
+ try{post(d.tank,"Reversal",-d.l,d.ref,"Reversal: "+r)}catch(e){throw Error(e.message+". If the milk was transferred or processed, reverse those movements first.")}
+ if(p)p.b="REVERSED";d.s="Reversed";d.rev={by:me(),t:dt()+" "+tm(),why:r};aud("Delivery reversed",ref,`${d.l} L removed from stock and payables. Reason: ${r}. Original entries kept.`);toast("Reversed. The original records are kept.")});
+PG.m2m_det=function(){
+ var d=D.find(x=>x.ref==M.sel);
+ if(!d)return head("Delivery not found","Return to the register.",GRP)+`<p><button onclick="go('m2m_del')">Back to Delivery Register</button></p>`;
+ var f=Fm(d.fid)||{},p=pOf(d),b=bOf(p),rl=L.filter(l=>l.ref==d.ref),au=A.filter(a=>a.r==d.ref).slice().reverse();
+ var chg=f.area&&d.area&&f.area!=d.area?` <span class="b a">Farmer's registered area is now ${E(f.area)}</span>`:"";
+ var rec=tbl(["Item","Detail"],[
+  ["Farmer",`${E(f.name)} (${f.id}, ${E(f.mem)}) ${st("Active")}<br><small class="mu">${E(f.phone)}</small>`],
+  ["Farmer area at delivery",E(d.area)+chg],["Branch",E(d.branch)],["Collection centre",E(d.cc)],["Route",E(d.route)],["Tank",Tk(d.tank)?E(Tk(d.tank).name):"-"],
+  ["Date and shift",`${E(d.date)}${d.t?" "+d.t:""}, ${E(d.shift)}`],["Delivered",d.l+" L"],["Recorded by",E(d.by||"-")],["Workflow status",wb(wf(d))]]);
+ var q=d.s=="Pending"?"Not yet tested":`Fat ${d.fat==null?"-":d.fat}%, temperature ${d.temp==null?"-":d.temp} C. ${st(d.s)} ${E(d.why||"Passed all rules")}`;
+ var link=tbl(["Record","Reference","Detail"],[["Quality result","",q]].concat(rl.map(l=>["Stock ledger",E(l.id),`${E(l.type)} ${l.q>0?"+":""}${fmt(l.q)} L, ${E(Tk(l.tank).name)}, ${E(l.d)}`])).concat([["Payable",p?"":"-",p?`${KES(p.g)} (${fmt(p.l)} L at ${KES(p.g/p.l)} per litre). ${p.b=="REVERSED"?"Reversed":b?"In batch "+b.id:"Not yet in a batch"}`:"None, milk is not accepted"],["Settlement batch",b?b.id:"-",b?`${wb(wf(d))} ${b.ref?"Payment ref "+E(b.ref)+" (simulated)":""}`:"-"]]));
+ var hist=(d.h||[]).length?card("Corrections",tbl(["When","By","From","To","Reason"],d.h.map(h=>[h.t,E(h.by),h.from+" L",h.to+" L",E(h.why)]))):"";
+ var act="";
+ if(d.s=="Pending"&&CAN.collect.includes(S.role))act+=`<div class="f"><label>Corrected litres<input id="dc_l" type="number" step="any" value="${d.l}"></label><label>Reason<input id="dc_r" style="min-width:240px"></label><button onclick="m2mCorrect('${d.ref}')">Record correction</button></div><small class="mu">The original quantity stays in the history.</small>`;
+ if(d.s=="Accepted"){if(p&&p.b&&p.b!="REVERSED")act+=`<p class="mu">Included in settlement batch ${p.b}, so it cannot be reversed here.</p>`;else if(CAN.approve.includes(S.role))act+=`<div class="f"><label>Reversal reason<input id="dr_r" style="min-width:260px"></label><button onclick="if(confirm('Reverse ${d.ref}? Stock and payable are removed. The original records are kept.'))m2mReverse('${d.ref}')">Reverse delivery</button></div>`}
+ if(d.s=="Rejected"||d.s=="Reversed")act+=`<p class="mu">${d.s=="Reversed"?`Reversed by ${E(d.rev&&d.rev.by)} on ${E(d.rev&&d.rev.t)}. ${E(d.rev&&d.rev.why)}`:"Rejected milk never enters stock or payables."}</p>`;
+ return head("Delivery "+d.ref,"Complete history and linked records.",GRP)+`<p><button class="s" onclick="go('m2m_del')">Back to register</button></p>`
+ +card("Delivery record",rec)+card("Linked records",link)+hist+(act?card("Actions",act):"")
+ +card("Audit history",tbl(["When","Who","Action","Detail"],au.map(a=>[a.t,E(a.u),E(a.a),E(a.x)]),"No audit entries for this delivery (demo seed data)."))};
+
+/* ---------- Quality & Acceptance ---------- */
+PG.m2m_qa=function(){
+ var pn=D.filter(d=>d.s=="Pending"),can=CAN.test.includes(S.role),ds=D.filter(inR);M.from=M.from||offI(-6);M.to=M.to||todayI();
+ var f=M.flt.qa||{},q=(f.q||"").toLowerCase();
+ var res=D.filter(d=>d.s!="Pending").filter(d=>{var fa=Fm(d.fid)||{};if(q&&!(d.ref.toLowerCase().includes(q)||String(fa.name||"").toLowerCase().includes(q)))return false;if(f.res&&f.res!="All results"&&d.s!=f.res)return false;return true}).reverse();
+ var g=pager("qa",res.length);
+ var L1=a=>a.reduce((s,d)=>s+d.l,0),ac=ds.filter(d=>d.s=="Accepted"),rj=ds.filter(d=>d.s=="Rejected"),aw=ds.filter(d=>d.s=="Pending"),rv=ds.filter(d=>d.s=="Reversed");
+ var ok=L1(ds)==L1(ac)+L1(rj)+L1(aw)+L1(rv);
+ var form=can?(pn.length?`<div class="f"><label>Delivery<select id="mq_d">${pn.map(d=>`<option value="${d.id}">${E(d.ref+" | "+(Fm(d.fid)||{}).name+" | "+d.l+" L")}</option>`).join("")}</select></label><label>Fat %<input id="mq_f" type="number" step="any" value="3.8"></label><label>Temp C<input id="mq_t" type="number" step="any" value="5"></label><label>Antibiotic<select id="mq_a"><option>Negative</option><option>Positive</option></select></label><button onclick="run(()=>{qtest(v('mq_d'),v('mq_f'),v('mq_t'),v('mq_a'));toast('Result recorded. Farmer SMS queued (simulated)')})">Record result</button></div>`:'<div class="empty">No deliveries waiting for a test.</div>'):`<p class="mu">Your role can view results. Only the Manager and Quality Officer record them.</p>`;
+ var rows=res.slice(g.s,g.e).map(d=>{var a=A.find(x=>x.r==d.ref&&String(x.a).indexOf("Quality")==0)||{};return [`<a href="#" onclick="m2mOpen('${d.ref}');return false">${d.ref}</a>`,E((Fm(d.fid)||{}).name),d.l,d.s=="Accepted"?d.l:0,d.s=="Rejected"?d.l:0,d.fat==null?"-":d.fat,d.temp==null?"-":d.temp,st(d.s),E(d.why||"-"),E(a.u||"-"),E(a.t||"-")]});
+ return head("Quality & Acceptance","Uses the existing Quality Control tests and rules. Untested or rejected milk never reaches stock or payables.",GRP)+DM
+ +card("Acceptance rules",`<p>Fat at least <b>${R.minFat}%</b>, temperature at most <b>${R.maxTemp} C</b>, antibiotic residue negative. Only milk that passes every rule is accepted, posted to its tank and accrued to the farmer. Partial acceptance is not supported in this demo, so a delivery is accepted or rejected as a whole.</p>`)
+ +card("Test a delivery",form)
+ +card("Quantity reconciliation",tbl(["Period","Delivered","Accepted","Rejected","Awaiting test","Reversed","Check"],[[`${M.from} to ${M.to}, ${E(M.cen)}`,fmt(L1(ds))+" L",fmt(L1(ac))+" L",fmt(L1(rj))+" L",fmt(L1(aw))+" L",fmt(L1(rv))+" L",ok?'<span class="b g">Delivered = accepted + rejected + awaiting + reversed</span>':'<span class="b r">Does not reconcile</span>']])+'<small class="mu">Period and centre are set on Workflow Overview.</small>')
+ +card("Results",fbar("qa",[["q","Search","text"],["res","Result","sel",["All results","Accepted","Rejected","Reversed"]]])+tbl(["Ref","Farmer","Delivered L","Accepted L","Rejected L","Fat %","Temp C","Result","Reason","Tester","When"],rows,"No results.")+pgBar("qa",g,res.length))};
+
+/* ---------- Stock Traceability ---------- */
+window.m2mTk=t=>{M.tk=t;M.pgn.mv=1;render()};
+PG.m2m_stock=function(){
+ var tid=M.tk||T[0].id,types=["Opening","Receipt","Transfer in","Transfer out","Processing","Dispatch","Loss","Adjustment","Reversal"];
+ var mat=T.map(t=>{var e=lastRc(t.id);return [E(t.name),...types.map(ty=>fmt(L.filter(l=>l.tank==t.id&&l.type==ty).reduce((s,l)=>s+l.q,0))),`<b>${fmt(bal(t.id))}</b>`,e?`${fmt(e.phys)} (${E(e.st)})`:"Not recorded"]});
+ var tr=sc(L.filter(l=>l.type=="Transfer in"||l.type=="Transfer out"),l=>l.q),cnt={},dup=0;
+ L.filter(l=>l.type=="Receipt").forEach(l=>{cnt[l.ref]=(cnt[l.ref]||0)+1;if(cnt[l.ref]==2)dup++});
+ var pbIn=PB.reduce((s,b)=>s+b.in,0),pLed=-L.filter(l=>l.type=="Processing").reduce((s,l)=>s+l.q,0);
+ var ck=(ok,t)=>`<tr><td>${t}</td><td>${ok?'<span class="b g">Pass</span>':'<span class="b r">Fail</span>'}</td></tr>`;
+ var chk=`<div class="tw"><table><tbody>${ck(tr===0,"Transfers net to zero, so moved litres are not counted twice")}${ck(dup===0,"No delivery has been posted to stock twice")}${ck(Math.abs(pbIn-pLed)<.001,"Milk used in processing batches equals processing outflows, and finished product is not added to milk stock")}${ck(T.every(t=>bal(t.id)>=0),"No tank has a negative balance")}</tbody></table></div>`;
+ var tl=D.filter(d=>d.s=="Accepted"||d.s=="Reversed").reverse(),g1=pager("trc",tl.length);
+ var trows=tl.slice(g1.s,g1.e).map(d=>{var r=recL(d),rv=L.find(l=>l.type=="Reversal"&&l.ref==d.ref);return [`<a href="#" onclick="m2mOpen('${d.ref}');return false">${d.ref}</a>`,E((Fm(d.fid)||{}).name),E(d.centre),Tk(d.tank)?E(Tk(d.tank).name):"-",d.l,r?`${E(r.id)}, ${E(r.d)}`:'<span class="b r">Missing</span>',rv?E(rv.id):"-"]});
+ var run0=0,mv=L.filter(l=>l.tank==tid).map(l=>{run0+=l.q;return [E(l.d),E(l.type),(l.q>0?"+":"")+fmt(l.q),fmt(run0),E(l.ref),E(l.src)]}).reverse(),g2=pager("mv",mv.length);
+ return head("Stock Traceability","One authoritative ledger. Each accepted delivery traces to its tank receipt, and later movements stay in the same ledger.",GRP)+DM
+ +card("Movements by tank (litres, ledger)",tbl(["Tank",...types,"Ledger balance","Last physical reading"],mat)+'<small class="mu">Ledger balances are calculated. They are not confirmed physical quantities until a reading is reviewed under Reconciliation.</small>')
+ +card("Integrity checks",chk)
+ +card("Delivery to stock receipt",tbl(["Delivery","Farmer","Centre","Tank","Litres","Ledger receipt","Reversal entry"],trows,"No accepted deliveries yet.")+pgBar("trc",g1,tl.length))
+ +card("Ledger history",`<div class="f"><label>Tank<select onchange="m2mTk(this.value)">${T.map(t=>`<option value="${t.id}"${t.id==tid?" selected":""}>${E(t.name)}</option>`).join("")}</select></label></div>`+tbl(["When","Type","Litres","Running balance","Reference","Source"],mv.slice(g2.s,g2.e),"No movements.")+pgBar("mv",g2,mv.length))};
+
+/* ---------- Reconciliation ---------- */
+window.m2mDip=()=>run(()=>{need("xfer");var tid=v("r_t"),x=v("r_v"),n=v("r_n").trim();
+ if(x==="")throw Error("Enter the physical reading in litres");x=+x;if(!(x>=0))throw Error("The reading must be zero or more");
+ var t=Tk(tid);if(!t)throw Error("Unknown tank");if(x>t.cap*1.02)throw Error("Reading exceeds the tank capacity of "+fmt(t.cap)+" L. Check the reading.");
+ var led=bal(tid),vr=Math.round((x-led)*100)/100;
+ var e={id:"RC-"+(++seq),t:dt()+" "+tm(),by:me(),phys:x,ledger:led,v:vr,notes:n,st:vr===0?"Verified, no variance":"Pending review",log:[]};
+ (M.rc[tid]=M.rc[tid]||[]).push(e);DIP[tid]={l:x,v:vr,t:e.t};
+ aud("Physical reading recorded",tid,`Physical ${fmt(x)} L, ledger ${fmt(led)} L, variance ${fmt(vr)} L. The ledger was not changed.`);
+ toast(vr===0?"Recorded. No variance.":"Recorded. Variance "+fmt(vr)+" L awaits review. The ledger is unchanged.")});
+window.m2mRev=(tid,id,act)=>run(()=>{need("approve");var e=(M.rc[tid]||[]).find(x=>x.id==id);if(!e)throw Error("Reading not found");
+ if(e.st!="Pending review"&&e.st!="Under investigation")throw Error("This reading is already closed");
+ if(e.by==me())throw Error("Maker-checker: the person who recorded the reading cannot review it");
+ var n=((document.getElementById("rn_"+id)||{}).value||"").trim();if(n.length<5)throw Error("Enter review notes (at least 5 characters)");
+ var w=dt()+" "+tm();e.log=e.log||[];
+ if(act=="inv"){e.st="Under investigation"}
+ else if(act=="close"){e.st="Reviewed, no adjustment"}
+ else{if(!e.v)throw Error("There is no variance to adjust");if(Math.abs(bal(tid)-e.ledger)>.001)throw Error("The ledger has moved since this reading. Take a new reading.");
+  var ref="ADJ-"+(++seq);post(tid,"Adjustment",e.v,ref,"Approved after physical reading: "+n);e.st="Adjusted";e.adj={ref:ref,by:me(),t:w};if(DIP[tid])DIP[tid].v=Math.round((DIP[tid].l-bal(tid))*100)/100}
+ e.log.push({t:w,by:me(),a:e.st,n:n});aud("Reconciliation review: "+e.st,tid,`Variance ${fmt(e.v)} L. ${n}`);toast("Review recorded: "+e.st)});
+PG.m2m_rec=function(){
+ var canR=CAN.xfer.includes(S.role),canA=CAN.approve.includes(S.role);
+ var sum1=T.map(t=>{var e=lastRc(t.id);return [E(t.name),fmt(bal(t.id))+" L (ledger)",e?fmt(e.phys)+" L":"Not recorded",e?E(e.t)+", "+E(e.by):"-",e?`<b style="color:${e.v?"var(--er)":"var(--ac)"}">${fmt(e.v)} L</b>`:"-",e?wb(e.st):'<span class="b a">Unverified</span>']});
+ var all=[];T.forEach(t=>(M.rc[t.id]||[]).forEach(e=>all.push({t:t,e:e})));all.reverse();var g=pager("rc",all.length);
+ var rows=all.slice(g.s,g.e).map(x=>{var e=x.e,open=e.st=="Pending review"||e.st=="Under investigation",last=(e.log||[]).slice(-1)[0];
+  var act=open&&canA?`<input id="rn_${e.id}" placeholder="Review notes" style="min-width:150px"> <button class="s" onclick="m2mRev('${x.t.id}','${e.id}','inv')">Investigate</button> <button class="s" onclick="m2mRev('${x.t.id}','${e.id}','close')">Close, no adjustment</button>${e.v?` <button onclick="if(confirm('Approve a stock adjustment of ${fmt(e.v)} L for ${E(x.t.name)}?'))m2mRev('${x.t.id}','${e.id}','adj')">Approve adjustment</button>`:""}`:"";
+  return [E(e.t),E(x.t.name),E(e.by),fmt(e.ledger),fmt(e.phys),`<b>${fmt(e.v)}</b>`,wb(e.st),E(e.notes||"-"),last?E(last.by+": "+last.n):"-",act]});
+ var form=canR?`<div class="f"><label>Tank<select id="r_t">${T.map(t=>`<option value="${t.id}">${E(t.name)}</option>`).join("")}</select></label><label>Physical reading (L)<input id="r_v" type="number" step="any" min="0"></label><label>Notes<input id="r_n" style="min-width:220px"></label><button onclick="m2mDip()">Record reading</button></div>`:`<p class="mu">Your role can view readings. Storekeeper and Manager record them.</p>`;
+ return head("Reconciliation","Variance = physical reading minus ledger balance. A variance is never applied automatically.",GRP)+DM
+ +card("Current position",tbl(["Tank","Ledger balance","Latest physical reading","Measured","Variance","Status"],sum1)+'<small class="mu">Until a reading is recorded and reviewed, a balance is a ledger figure, not a confirmed physical quantity.</small>')
+ +card("Record a physical reading",form)
+ +card("Readings and reviews",tbl(["When","Tank","Measured by","Ledger L","Physical L","Variance L","Status","Notes","Last review","Review"],rows,"No readings recorded yet.")+pgBar("rc",g,all.length)+'<small class="mu">Only the Manager reviews, and not the person who recorded the reading. An approved adjustment posts a separate ledger entry. The reading and the earlier ledger entries are kept.</small>')};
+
+/* ---------- Payment Calculations ---------- */
+function calc(f,from,to){
+ var ls=P.filter(p=>p.fid==f.id&&p.b!="REVERSED").map(p=>({p:p,d:dOf(p)})).filter(x=>x.d&&dIso(x.d)>=from&&dIso(x.d)<=to);
+ ls.forEach(x=>{var b=bOf(x.p);x.b=b;x.state=!b?"Calculated":b.paid?"Paid":b.s=="Approved"?(b.pay=="Failed"?"Approved, payment failed":"Approved"):"Calculated (draft batch)"});
+ var allUn=sc(P.filter(p=>p.fid==f.id&&!p.b),p=>p.g),rec=Math.min(cc(f.advance||0),Math.round(allUn*CAP));
+ return {f:f,ls:ls,lit:ls.reduce((s,x)=>s+x.p.l,0),gross:sc(ls,x=>x.p.g),calc:sc(ls.filter(x=>!x.b),x=>x.p.g),appr:sc(ls.filter(x=>x.b&&!x.b.paid),x=>x.p.g),paid:sc(ls.filter(x=>x.b&&x.b.paid),x=>x.p.g),allUn:allUn,rec:rec}}
+window.m2mPc=(k,val)=>{M.pc[k]=val;render()};
+PG.m2m_pay=function(){
+ var c=M.pc;c.from=c.from||offI(-6);c.to=c.to||todayI();c.fid=c.fid||"ALL";
+ var rs=F.filter(f=>c.fid=="ALL"||f.id==c.fid).map(f=>calc(f,c.from,c.to)).filter(r=>c.fid!="ALL"||r.ls.length);
+ var K2=n=>KES(n/100);
+ var ctl=`<div class="f"><label>Farmer<select onchange="m2mPc('fid',this.value)"><option value="ALL">All farmers with deliveries</option>${F.map(f=>`<option value="${f.id}"${f.id==c.fid?" selected":""}>${E(f.mem+" | "+f.name)}</option>`).join("")}</select></label><label>Period from<input type="date" value="${c.from}" onchange="m2mPc('from',this.value)"></label><label>To<input type="date" value="${c.to}" onchange="m2mPc('to',this.value)"></label></div>`;
+ var tb=tbl(["Farmer","Membership","Eligible litres","Gross milk value","Calculated, not in a batch","Approved, awaiting payment","Paid (simulated)"],rs.map(r=>[E(r.f.name),E(r.f.mem),fmt(r.lit),K2(r.gross),K2(r.calc),K2(r.appr),K2(r.paid)]),"No eligible deliveries in this period.");
+ var det="";
+ if(c.fid!="ALL"){var r=calc(Fm(c.fid),c.from,c.to);if(r){
+  det=card("Itemised calculation: "+E(r.f.name)+" ("+E(r.f.mem)+"), "+c.from+" to "+c.to,
+   tbl(["Delivery","Date","Litres","Rate (KES per L)","Gross","Status"],r.ls.map(x=>[`<a href="#" onclick="m2mOpen('${x.p.ref}');return false">${x.p.ref}</a>`,E(x.d.date),fmt(x.p.l),(x.p.g/x.p.l).toFixed(2),KES(x.p.g),E(x.state)]),"No eligible deliveries.")
+   +tbl(["Component","Amount"],[["Eligible accepted litres",fmt(r.lit)+" L"],["Gross milk amount",K2(r.gross)],["Authorised deductions (other than advances)","KES 0, none configured"],["Advance recovery if batched now (capped at 50% of unsettled milk value)","- "+K2(r.rec)],["Authorised adjustments","KES 0, needs an authorised adjustment process"],["Already settled (paid, gross)",K2(r.paid)],["<b>Outstanding milk value (gross, unpaid)</b>","<b>"+K2(r.gross-r.paid)+"</b>"],["Net payable if batched now (all unsettled milk)",K2(r.allUn-r.rec)]])
+   +'<small class="mu">Rates shown are the rates captured when each delivery was accepted, so a later price change does not restate earlier milk. Advance recovery follows the same 50% rule the settlement batch applies, on all of the farmer\'s unsettled milk.</small>')}}
+ return head("Payment Calculations","Itemised payable from eligible deliveries only. Calculated, approved and paid are kept apart.",GRP)+DM
+ +card("Stages",`<p>${wb("Payable calculated")} then ${wb("Awaiting payment approval")} then ${wb("Payment pending")} then ${wb("Paid (simulated)")}. This page only previews. It never changes a payable that is in an approved or paid batch.</p>`)
+ +card("Select period",ctl+tb)+det+`<p><button onclick="go('m2m_apr')">Go to Approvals & Settlements</button></p>`};
+
+/* ---------- Approvals & Settlements ---------- */
+window.m2mBatch=()=>run(()=>{mkBatch();toast("Batch drafted from calculated payables. It awaits approval.")});
+window.m2mApprove=id=>run(()=>{var b=B.find(x=>x.id==id);if(b&&b.byName&&b.byName==me())throw Error("Maker-checker: you prepared this batch and cannot approve it");apprB(id);toast("Approved. No money moves until payment is released.")});
+window.m2mPay=id=>run(()=>{need("pay");var b=B.find(x=>x.id==id);if(!b)throw Error("Batch not found");if(b.paid)throw Error("Already paid");if(b.s!="Approved")throw Error("Only approved batches can be paid");
+ var out=v("po_"+id),rec={t:dt()+" "+tm(),by:me(),res:out};b.att=b.att||[];
+ if(out!="Simulate success"){b.pay="Failed";b.att.push(rec);aud("Settlement payment failed (simulated)",id,"No money moved. The batch stays Approved and no farmer is marked paid.");toast("Payment failed (simulated). Nobody was marked paid.",1);return}
+ payB(id);b.pay=null;b.att.push(rec);toast("Payment recorded as simulated. Confirmation SMS queued.")});
+PG.m2m_apr=function(){
+ var can={mk:CAN.settle.includes(S.role),ap:CAN.approve.includes(S.role),pay:CAN.pay.includes(S.role)},me1=me();
+ var lines=P.filter(p=>p.b&&p.b!="REVERSED"),uniq=new Set(lines.map(p=>p.ref)).size;
+ var unG=sc(P.filter(p=>!p.b),p=>p.g)/100;
+ var bst=b=>b.paid?"Paid (simulated)":b.pay=="Failed"?"Payment failed":b.s=="Approved"?"Payment pending":"Awaiting payment approval";
+ var cards=B.slice().reverse().map(b=>{
+  var it=tbl(["Farmer","Litres","Gross","Advance recovered","Net payable"],b.it.map(x=>[E((Fm(x.fid)||{}).name),fmt(x.l),KES(x.g),KES(x.dd),KES(x.n)]));
+  var act="";
+  if(b.s=="Draft"&&can.ap){var own=b.byName&&b.byName==me1;act=`<button${own?" disabled title=\"You prepared this batch\"":""} onclick="m2mApprove('${b.id}')">Approve</button>${own?' <span class="mu">You prepared this batch, so another person must approve it.</span>':""}`}
+  if(b.s=="Approved"&&!b.paid&&can.pay)act=`<label>Simulated provider result <select id="po_${b.id}"><option>Simulate success</option><option>Simulate provider failure</option></select></label> <button onclick="if(confirm('Release payment for ${b.id}? This is simulated.'))m2mPay('${b.id}')">Release payment</button>`;
+  var at=(b.att||[]).length?tbl(["When","By","Result"],b.att.map(a=>[a.t,E(a.by),E(a.res)])):"";
+  return card(`${b.id} ${wb(bst(b))} <small class="mu">prepared by ${E(b.byName||b.by)}${b.ap?", approved by role "+E(b.ap):""}${b.ref?", ref "+E(b.ref)+" (simulated)":""}</small>`,it+`<p>${act}</p>`+at)}).join("");
+ return head("Approvals & Settlements","Prepare, approve, then release. Approving never marks a farmer as paid.",GRP)+DM
+ +card("Duty separation",tbl(["Step","Allowed roles","Rule"],[["Prepare batch",CAN.settle.join(", "),"Draws only calculated payables, each delivery once"],["Approve",CAN.approve.join(", "),"Cannot be the person who prepared it"],["Release payment",CAN.pay.join(", "),"Only after approval. A failure leaves the batch unpaid"]])+`<small class="mu">${uniq==lines.length?'<span class="b g">Pass</span>':'<span class="b r">Fail</span>'} Each delivery appears in at most one batch (${lines.length} batched, ${uniq} unique).</small>`)
+ +card("Prepare a settlement batch",`<p>Calculated payables not yet in a batch: <b>${KES(unG)}</b> gross.</p>${can.mk?'<button onclick="m2mBatch()">Create settlement batch</button>':'<span class="mu">Your role cannot prepare batches.</span>'}`)
+ +(cards||card("Batches",'<div class="empty">No batches yet.</div>'))};
+
+/* ---------- Farmer Statements ---------- */
+window.m2mSt=(k,val)=>{M.stm[k]=val;render()};
+function stmtData(){var c=M.stm;c.fid=c.fid||F[0].id;c.from=c.from||offI(-29);c.to=c.to||todayI();var f=Fm(c.fid);if(!f)return null;
+ var all=P.filter(p=>p.fid==f.id).map(p=>({p:p,d:dOf(p)})).filter(x=>x.d);
+ all.forEach(x=>{var b=bOf(x.p);x.b=b;x.state=x.p.b=="REVERSED"?"Reversed":!b?"Unsettled":b.paid?`Paid, ${b.id} (ref ${b.ref||"-"})`:`${b.id}, ${b.pay=="Failed"?"payment failed":b.s=="Approved"?"approved, payment pending":"awaiting approval"}`});
+ var live=all.filter(x=>x.p.b!="REVERSED"),inp=x=>dIso(x.d)>=c.from&&dIso(x.d)<=c.to;
+ var lines=all.filter(inp).sort((a,b)=>dIso(a.d)<dIso(b.d)?-1:1),rng=live.filter(inp);
+ var open=sc(live.filter(x=>dIso(x.d)<c.from&&!(x.b&&x.b.paid)),x=>x.p.g),gross=sc(rng,x=>x.p.g),paid=sc(rng.filter(x=>x.b&&x.b.paid),x=>x.p.g);
+ var bs=[...new Set(rng.filter(x=>x.b).map(x=>x.b.id))].map(id=>B.find(b=>b.id==id));
+ return {f:f,from:c.from,to:c.to,lines:lines,open:open,gross:gross,paid:paid,out:open+gross-paid,bs:bs}}
+window.m2mCsv=()=>{var s=stmtData();if(!s)return;
+ var rows=[["Receipt","Date","Centre","Litres","Rate","Gross","Settlement"]].concat(s.lines.map(x=>[x.p.ref,dIso(x.d),x.d.centre,x.p.l,(x.p.g/x.p.l).toFixed(2),x.p.g.toFixed(2),x.state]));
+ var csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(",")).join("\r\n");
+ var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="statement-"+s.f.mem+".csv";a.click();aud("Statement exported",s.f.id,s.from+" to "+s.to)};
+PG.m2m_stm=function(){var s=stmtData();if(!s)return head("Farmer Statements","No farmers.",GRP);var K2=n=>KES(n/100);
+ var ctl=`<div class="f"><label>Farmer<select onchange="m2mSt('fid',this.value)">${F.map(f=>`<option value="${f.id}"${f.id==s.f.id?" selected":""}>${E(f.mem+" | "+f.name)}</option>`).join("")}</select></label><label>From<input type="date" value="${s.from}" onchange="m2mSt('from',this.value)"></label><label>To<input type="date" value="${s.to}" onchange="m2mSt('to',this.value)"></label><button class="s" onclick="m2mCsv()">Export CSV</button><button class="s" onclick="window.print()">Print</button></div>`;
+ var bt=tbl(["Batch","Status","Farmer gross in batch","Advance recovered","Net","Payment ref","Check"],s.bs.map(b=>{var x=b.it.find(i=>i.fid==s.f.id)||{g:0,dd:0,n:0};return [b.id,wb(b.paid?"Paid (simulated)":b.pay=="Failed"?"Payment failed":b.s=="Approved"?"Payment pending":"Awaiting payment approval"),KES(x.g),KES(x.dd),KES(x.n),E(b.ref||"-"),cc(x.g)==cc(x.dd)+cc(x.n)?'<span class="b g">Gross = advance + net</span>':'<span class="b r">Mismatch</span>']}),"No settlement batches for these deliveries yet.");
+ return head("Farmer Statements","Every figure traces to a delivery, a batch or a payment reference.",GRP)+DM+card("Statement",ctl
+ +`<p><b>${E(s.f.name)}</b> | ${E(s.f.mem)} | ${E(s.f.phone)} | Area ${E(s.f.area)} | Centre ${E(s.f.centre)} | Period ${s.from} to ${s.to}</p>`
+ +tbl(["Line","Amount"],[["Opening: unpaid milk value from deliveries before "+s.from,K2(s.open)],["Add: gross value of accepted milk in the period",K2(s.gross)],["Less: gross value settled and paid (simulated) in the period","- "+K2(s.paid)],["<b>Gross milk value outstanding</b>","<b>"+K2(s.out)+"</b>"],["Advance still owed by the farmer",KES(s.f.advance||0)]])
+ +'<small class="mu">Advances are recovered inside each settlement batch, up to 50% of that batch, as shown below. Reversed deliveries are listed but not counted.</small>')
+ +card("Deliveries in the period",tbl(["Delivery","Date","Centre","Litres","Rate","Gross","Settlement"],s.lines.map(x=>[`<a href="#" onclick="m2mOpen('${x.p.ref}');return false">${x.p.ref}</a>`,E(x.d.date),E(x.d.centre),fmt(x.p.l),(x.p.g/x.p.l).toFixed(2),KES(x.p.g),E(x.state)]),"No accepted deliveries in this period."))
+ +card("Settlement batches and deductions",bt)};
+
+/* ---------- Audit & Exceptions ---------- */
+PG.m2m_aud=function(){
+ var X=exc(),sev={High:"r",Medium:"a",Low:""},q=((M.flt.aud||{}).q||"").toLowerCase();
+ var au=A.filter(a=>!q||(String(a.a)+" "+a.u+" "+a.r+" "+a.x).toLowerCase().includes(q)),g=pager("aud",au.length);
+ return head("Audit & Exceptions","Items that need action, and the full record of who did what.",GRP)+DM
+ +card("Exceptions requiring action ("+X.length+")",tbl(["Severity","Exception","Record","Detail",""],X.map(x=>[`<span class="b ${sev[x[0]]}">${x[0]}</span>`,E(x[1]),E(x[2]),E(x[3]),`<button class="s" onclick="go('${x[4]}')">Open</button>`]),"No exceptions."))
+ +card("Audit trail",fbar("aud",[["q","Search","text"]])+tbl(["When","Actor","Action","Record","Detail"],au.slice(g.s,g.e).map(a=>[E(a.t),E(a.u),E(a.a),E(a.r),E(a.x)]),"No audit entries.")+pgBar("aud",g,au.length)+'<small class="mu">Entries are append-only here. Corrections and reversals add entries and never edit earlier ones.</small>')};
+
+/* ---------- wiring ---------- */
+window.mzReset=function(){if(confirm("Reset all demo data to the starting set?")){localStorage.removeItem("mz_erp");localStorage.removeItem("mz_m2m");location.reload()}};
+var r0=render;render=function(){norm();r0();var b=document.getElementById("m2mBtn");if(b)b.style.display=(S.role&&window.m2mOK("m2m_ov",S.role))?"":"none";try{localStorage.setItem("mz_m2m",JSON.stringify({rc:M.rc}))}catch(e){}};
+var top=document.querySelector(".top");
+if(top&&!document.getElementById("m2mBtn")){var bt=document.createElement("button");bt.id="m2mBtn";bt.className="s";bt.textContent="Milk-to-Money";bt.onclick=function(){go("m2m_ov")};var first=top.querySelector("button[onclick=\"go('milk')\"]");if(first)top.insertBefore(bt,first);else top.appendChild(bt)}
+render();
+})();</script>
+</body></html>
