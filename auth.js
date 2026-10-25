@@ -6,9 +6,10 @@ var ACC=[
 {e:"accountant@maziwa.demo",p:"Account@2026",n:"James Mwenda",r:["Accountant"]},
 {e:"store@maziwa.demo",p:"Store@2026",n:"Lucy Kendi",r:["Store"]},
 {e:"deputy@maziwa.demo",p:"Deputy@2026",n:"Mercy Mbaka",r:["Accountant","Quality"]},
+{e:"auditor@maziwa.demo",p:"Audit@2026",n:"Esther Njeri",r:["Auditor"]},
 {e:"0712000100",p:"1234",n:"Wanjiru Kinyua",r:["Farmer"],f:"F1"},
 {e:"hotel@maziwa.demo",p:"Hotel@2026",n:"Mt Kenya Hotel",r:["Customer"]}];
-var STAFF=["Manager","Clerk","Quality","Accountant","Store"];
+var STAFF=["Manager","Clerk","Quality","Accountant","Store","Auditor"];
 var Auth={
 login:function(role,id,pw,code){
  id=id.replace(/\s/g,"").toLowerCase();
